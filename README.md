@@ -93,10 +93,25 @@ Implement a secure authentication system following industry-standard practices.
 
 ## Deployment
 
-- Frontend : Vercel (Planned)
-- Backend : Render (Planned)
+- Frontend : Vercel (techo-verse-fg99.vercel.app)
+- Backend : Render (https://techoverse-fpcd.onrender.com)
 
 ---
+
+## 📸 Screenshots
+
+### Register Page
+![Kanban Board](./assets/register.png)
+
+### Login Page
+![Login Page](./assets/login.png)
+
+### Dashboard
+![Dashboard](./assets/dashboard.png)
+
+
+
+
 
 # 📂 Project Folder Structure
 
@@ -364,7 +379,7 @@ JWT_SECRET=YOUR_SECRET_KEY
 ## Clone Repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/techverse.git
+git clone [https://github.com/anucodeverse/TechoVerse]
 ```
 
 ---

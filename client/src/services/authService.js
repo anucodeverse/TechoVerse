@@ -1,23 +1,25 @@
 import axios from "axios";
 
-// Backend Base URL
 const API = axios.create({
   baseURL: "https://techoverse-fpcd.onrender.com/api/auth",
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
-// ================= Register =================
+// Register
 export const registerUser = async (userData) => {
   const response = await API.post("/register", userData);
   return response.data;
 };
 
-// ================= Login =================
+// Login
 export const loginUser = async (userData) => {
   const response = await API.post("/login", userData);
   return response.data;
 };
 
-// ================= Get Profile =================
+// Profile
 export const getProfile = async () => {
   const token = localStorage.getItem("token");
 
@@ -29,3 +31,5 @@ export const getProfile = async () => {
 
   return response.data;
 };
+
+export default API;

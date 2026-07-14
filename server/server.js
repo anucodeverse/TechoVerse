@@ -8,22 +8,45 @@ const protect = require("./middleware/authMiddleware");
 
 const app = express();
 
-// Connect Database
+// =====================
+// Connect MongoDB
+// =====================
 connectDB();
 
-// Middleware
-app.use(cors());
+// =====================
+// CORS Configuration
+// =====================
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://techo-verse-op9a.vercel.app",
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
+
+// =====================
+// Body Parser
+// =====================
 app.use(express.json());
 
-// Test Route
+// =====================
+// Home Route
+// =====================
 app.get("/", (req, res) => {
   res.send("🚀 TechoVerse Authentication API is Running...");
 });
 
+// =====================
 // Authentication Routes
+// =====================
 app.use("/api/auth", authRoutes);
 
-// Protected Test Route
+// =====================
+// Protected Route
+// =====================
 app.get("/api/auth/profile", protect, (req, res) => {
   res.status(200).json({
     success: true,
@@ -32,7 +55,9 @@ app.get("/api/auth/profile", protect, (req, res) => {
   });
 });
 
-// Handle Invalid Routes
+// =====================
+// 404 Handler
+// =====================
 app.use((req, res) => {
   res.status(404).json({
     success: false,
@@ -40,6 +65,9 @@ app.use((req, res) => {
   });
 });
 
+// =====================
+// Start Server
+// =====================
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {

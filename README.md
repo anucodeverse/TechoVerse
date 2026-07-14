@@ -100,14 +100,14 @@ Implement a secure authentication system following industry-standard practices.
 
 ## 📸 Screenshots
 
-### Register Page
-![Register Page](./assets/register.png)
-
 ### Login Page
-![Login Page](./assets/login.png)
+![Login Page](./images/login.png)
+
+### Registration Page
+![Register Page](./images/register.png)
 
 ### Dashboard
-![Dashboard](./assets/dashboard.png)
+![Dashboard](./images/dashboard.png)
 
 
 

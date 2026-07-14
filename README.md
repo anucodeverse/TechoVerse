@@ -101,13 +101,13 @@ Implement a secure authentication system following industry-standard practices.
 ## 📸 Screenshots
 
 ### Register Page
-![Register Page](.../assets/register.png)
+![Register Page](./assets/register.png)
 
 ### Login Page
-![Login Page](../assets/login.png)
+![Login Page](./assets/login.png)
 
 ### Dashboard
-![Dashboard](..../assets/dashboard.png)
+![Dashboard](./assets/dashboard.png)
 
 
 

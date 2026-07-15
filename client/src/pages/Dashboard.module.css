@@ -1,0 +1,92 @@
+.container {
+  min-height: 100vh;
+  background: linear-gradient(to right, #eef2ff, #f8fafc);
+  padding: 40px;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 35px;
+}
+
+.heading {
+  font-size: 38px;
+  color: #1e3a8a;
+  margin-bottom: 10px;
+}
+
+.subHeading {
+  color: #6b7280;
+  font-size: 18px;
+}
+
+.cardContainer {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.card {
+  width: 480px;
+  background: white;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+.cardTitle {
+  color: #2563eb;
+  margin-bottom: 25px;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 10px;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 0;
+  border-bottom: 1px solid #f1f5f9;
+  font-size: 16px;
+}
+
+.label {
+  font-weight: 600;
+  color: #374151;
+}
+
+.status {
+  color: #16a34a;
+  background: #dcfce7;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-weight: bold;
+}
+
+.stats {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.statCard {
+  width: 120px;
+  text-align: center;
+  background: #eff6ff;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.note {
+  margin-top: 30px;
+  color: #6b7280;
+  text-align: center;
+  line-height: 1.7;
+}
+
+.footer {
+  margin-top: 40px;
+  text-align: center;
+  color: #6b7280;
+  font-size: 14px;
+}

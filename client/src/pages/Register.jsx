@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { registerUser } from "../services/authService";
+import styles from "./Register.module.css";
 
 function Register() {
   const navigate = useNavigate();
@@ -55,19 +56,19 @@ function Register() {
   };
 
   return (
-    <div style={styles.container}>
-      <div style={styles.card}>
+    <div className={styles.container}>
+      <div className={styles.card}>
 
         <h1>TechoVerse Register</h1>
 
         {error && (
-          <p style={styles.error}>
+          <p className={styles.error}>
             {error}
           </p>
         )}
 
         {success && (
-          <p style={styles.success}>
+          <p className={styles.success}>
             {success}
           </p>
         )}
@@ -82,7 +83,7 @@ function Register() {
             onChange={handleChange}
             autoComplete="name"
             required
-            style={styles.input}
+            className={styles.input}
           />
 
           <input
@@ -93,7 +94,7 @@ function Register() {
             onChange={handleChange}
             autoComplete="email"
             required
-            style={styles.input}
+            className={styles.input}
           />
 
           <input
@@ -104,79 +105,27 @@ function Register() {
             onChange={handleChange}
             autoComplete="new-password"
             required
-            style={styles.input}
+            className={styles.input}
           />
 
           <button
             type="submit"
             disabled={loading}
-            style={styles.button}
+            className={styles.button}
           >
             {loading ? "Registering..." : "Register"}
           </button>
 
         </form>
 
-        <p style={{ marginTop: "15px" }}>
+        <p className={styles.loginText}>
           Already have an account?
-          <Link to="/login">
-            {" "}Login
-          </Link>
+          <Link to="/login"> Login</Link>
         </p>
 
       </div>
     </div>
   );
 }
-
-const styles = {
-  container: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    height: "100vh",
-    background: "#f4f4f4",
-  },
-
-  card: {
-    width: "360px",
-    background: "#fff",
-    padding: "25px",
-    borderRadius: "10px",
-    boxShadow: "0 0 10px rgba(0,0,0,0.1)",
-    textAlign: "center",
-  },
-
-  input: {
-    width: "100%",
-    padding: "12px",
-    margin: "10px 0",
-    fontSize: "16px",
-    border: "1px solid #ccc",
-    borderRadius: "5px",
-    boxSizing: "border-box",
-  },
-
-  button: {
-    width: "100%",
-    padding: "12px",
-    background: "#16a34a",
-    color: "#fff",
-    border: "none",
-    borderRadius: "5px",
-    cursor: "pointer",
-    fontSize: "16px",
-  },
-
-  error: {
-    color: "#dc2626",
-    fontWeight: "bold",
-  },
-
-  success: {
-    color: "#16a34a",
-    fontWeight: "bold",
-  },
-};
 
 export default Register;

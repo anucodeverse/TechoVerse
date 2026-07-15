@@ -4,6 +4,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 import { loginUser } from "../services/authService";
 import { useAuth } from "../context/AuthContext";
+import styles from "./Login.module.css";
 
 function Login() {
   const navigate = useNavigate();
@@ -35,10 +36,12 @@ function Login() {
 
       const data = await loginUser(formData);
 
+      // Save login time only once
+      localStorage.setItem("loginTime", new Date().toLocaleString());
+
       login(data.user, data.token);
 
       navigate("/dashboard");
-
     } catch (err) {
       setError(
         err.response?.data?.message || "Invalid Email or Password"
@@ -49,13 +52,13 @@ function Login() {
   };
 
   return (
-    <div style={styles.container}>
-      <div style={styles.card}>
+    <div className={styles.container}>
+      <div className={styles.card}>
 
         <h1>TechoVerse Login</h1>
 
         {error && (
-          <p style={styles.error}>
+          <p className={styles.error}>
             {error}
           </p>
         )}
@@ -70,10 +73,10 @@ function Login() {
             onChange={handleChange}
             autoComplete="email"
             required
-            style={styles.input}
+            className={styles.input}
           />
 
-          <div style={styles.passwordContainer}>
+          <div className={styles.passwordContainer}>
 
             <input
               type={showPassword ? "text" : "password"}
@@ -83,11 +86,11 @@ function Login() {
               onChange={handleChange}
               autoComplete="current-password"
               required
-              style={styles.passwordInput}
+              className={styles.passwordInput}
             />
 
             <span
-              style={styles.eye}
+              className={styles.eye}
               onClick={() => setShowPassword(!showPassword)}
             >
               {showPassword ? <FaEyeSlash /> : <FaEye />}
@@ -98,95 +101,21 @@ function Login() {
           <button
             type="submit"
             disabled={loading}
-            style={styles.button}
+            className={styles.button}
           >
             {loading ? "Logging in..." : "Login"}
           </button>
 
         </form>
 
-        <p style={{ marginTop: "15px" }}>
+        <p className={styles.registerText}>
           Don't have an account?
-          <Link to="/register">
-            {" "}Register
-          </Link>
+          <Link to="/register"> Register</Link>
         </p>
 
       </div>
     </div>
   );
 }
-
-const styles = {
-  container: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    height: "100vh",
-    background: "#f4f4f4",
-  },
-
-  card: {
-    width: "360px",
-    background: "#fff",
-    padding: "25px",
-    borderRadius: "10px",
-    boxShadow: "0 0 10px rgba(0,0,0,0.1)",
-    textAlign: "center",
-  },
-
-  input: {
-    width: "100%",
-    padding: "12px",
-    margin: "10px 0",
-    fontSize: "16px",
-    border: "1px solid #ccc",
-    borderRadius: "5px",
-    boxSizing: "border-box",
-  },
-
-  passwordContainer: {
-    position: "relative",
-    margin: "10px 0",
-  },
-
-  passwordInput: {
-    width: "100%",
-    padding: "12px",
-    paddingRight: "45px",
-    fontSize: "16px",
-    border: "1px solid #ccc",
-    borderRadius: "5px",
-    boxSizing: "border-box",
-  },
-
-  eye: {
-    position: "absolute",
-    right: "15px",
-    top: "50%",
-    transform: "translateY(-50%)",
-    cursor: "pointer",
-    fontSize: "18px",
-    color: "#555",
-  },
-
-  button: {
-    width: "100%",
-    padding: "12px",
-    background: "#2563eb",
-    color: "#fff",
-    border: "none",
-    borderRadius: "5px",
-    cursor: "pointer",
-    fontSize: "16px",
-    marginTop: "10px",
-  },
-
-  error: {
-    color: "#dc2626",
-    fontWeight: "bold",
-    marginBottom: "10px",
-  },
-};
 
 export default Login;

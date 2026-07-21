@@ -274,7 +274,7 @@ All operations update the UI instantly without page refresh.
 
 ---
 
-# 🧪 Testing
+#  Testing
 
 Completed Test Cases
 
@@ -294,13 +294,67 @@ Completed Test Cases
 
 ---
 
-# 🚀 Sprint 15 Completion
 
-| Feature | Status |
+## 🔐 Login
+
+![Login](images/login.png)
+
+---
+
+## 📝 Register
+
+![Register](images/register.png)
+
+
+#  Sprint 15 Completion
+## 📊 Dashboard
+
+![Dashboard](images/dashboard.png)
+
+
+| Feature | Status |## 📁 Project Management
+
+### Project List
+
+![Projects](images/projects.png)
+
+### Create Project
+
+![Create Project](images/create-project.png)
+
+### Edit Project
+
+![Edit Project](images/edit-project.png)
+
+### Delete Project
+
+![Delete Project](images/delete-project.png)## 📈 Dashboard Analytics
+
+![Analytics](images/analytics.png)
+
+## 👑 Premium Membership
+
+![Premium](images/premium.png)
+
+## 👤 Profile
+
+![Profile](images/profile.png)
+
+## Quick Actions
+
+![Quick](images/quick.png)
+
+## 💳 Stripe Checkout
+
+![Stripe](images/stripe-checkout.png)
+
+
+
+
 |----------|--------|
 | Authentication | ✅ |
 | JWT Protection | ✅ |
-| Project CRUD | ✅ |
+| Project CRUD | ✅ |## 📈 Dashboard Analytics## 👑 Premium Membership
 | MongoDB Integration | ✅ |
 | Ownership Validation | ✅ |
 | Dashboard Analytics | ✅ |

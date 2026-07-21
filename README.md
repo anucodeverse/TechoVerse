@@ -312,7 +312,7 @@ Completed Test Cases
 ![Dashboard](images/dashboard.png)
 
 
-| Feature | Status |## 📁 Project Management
+
 
 ### Project List
 
@@ -350,7 +350,7 @@ Completed Test Cases
 
 
 
-
+| Feature | Status |## 📁 Project Management
 |----------|--------|
 | Authentication | ✅ |
 | JWT Protection | ✅ |

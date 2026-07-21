@@ -54,7 +54,7 @@ function UpgradeButton(){
   className={styles.upgradeBtn}
   onClick={handlePayment}
 >
-  🚀 Upgrade to Premium
+   Upgrade to Premium
 </button>
 
   );

@@ -349,8 +349,9 @@ Completed Test Cases
 ![Stripe](images/stripe-checkout.png)
 
 
+---
 
-| Feature | Status |## 📁 Project Management
+| Feature  | Status |## 📁 Project Management
 |----------|--------|
 | Authentication | ✅ |
 | JWT Protection | ✅ |

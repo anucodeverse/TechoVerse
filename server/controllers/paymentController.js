@@ -1,5 +1,8 @@
 const Stripe = require("stripe");
 const User = require("../models/User");
+if (!process.env.STRIPE_SECRET_KEY) {
+  throw new Error("STRIPE_SECRET_KEY is missing");
+}
 
 const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 

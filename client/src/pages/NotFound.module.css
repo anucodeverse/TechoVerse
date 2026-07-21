@@ -1,0 +1,176 @@
+.container {
+
+  min-height:100vh;
+
+  display:flex;
+
+  flex-direction:column;
+
+  justify-content:center;
+
+  align-items:center;
+
+  background:
+  linear-gradient(
+    to right,
+    #fef2f2,
+    #f8fafc
+  );
+
+  text-align:center;
+
+  padding:40px;
+
+}
+
+
+/* Error Number */
+.container h1 {
+
+  font-size:90px;
+
+  font-weight:800;
+
+  color:#b91c1c;
+
+  margin:0 0 10px;
+
+  letter-spacing:2px;
+
+}
+
+
+
+.container h2 {
+
+  font-size:32px;
+
+  font-weight:700;
+
+  color:#374151;
+
+  margin-bottom:15px;
+
+}
+
+
+
+/* Description */
+
+.container p {
+
+  max-width:450px;
+
+  color:#64748b;
+
+  font-size:16px;
+
+  line-height:1.6;
+
+  margin-bottom:30px;
+
+}
+
+
+
+
+
+/* Buttons */
+
+.buttons {
+
+  display:flex;
+
+  gap:15px;
+
+}
+
+
+
+
+.buttons a {
+
+  text-decoration:none;
+
+  padding:12px 24px;
+
+  border-radius:10px;
+
+  font-size:15px;
+
+  font-weight:600;
+
+  transition:0.3s ease;
+
+}
+
+
+
+.buttons a:first-child {
+
+  background:#dc2626;
+
+  color:white;
+
+}
+
+
+
+.buttons a:first-child:hover {
+
+  background:#b91c1c;
+
+}
+
+
+
+
+.buttons a:last-child {
+
+  background:white;
+
+  color:#dc2626;
+
+  border:1px solid #dc2626;
+
+}
+
+
+
+.buttons a:last-child:hover {
+
+  background:#fee2e2;
+
+}
+
+
+
+
+
+@media(max-width:600px){
+
+
+  .container h1 {
+
+    font-size:70px;
+
+  }
+
+
+  .container h2 {
+
+    font-size:25px;
+
+  }
+
+
+  .buttons {
+
+    flex-direction:column;
+
+    width:200px;
+
+  }
+
+
+}

@@ -5,7 +5,7 @@ import axios from "axios";
 // ===============================
 
 const API = axios.create({
-  baseURL: `${import.meta.env.VITE_API_URL}/auth`,
+  baseURL: import.meta.env.VITE_PROJECT_API,
   timeout: 10000,
   headers: {
     "Content-Type": "application/json",
@@ -51,12 +51,12 @@ API.interceptors.response.use(
 );
 
 // ===============================
-// Register User
+// Get All Projects
 // ===============================
 
-export const registerUser = async (userData) => {
+export const getProjects = async () => {
   try {
-    const response = await API.post("/register", userData);
+    const response = await API.get("/");
     return response.data;
   } catch (error) {
     throw error;
@@ -64,12 +64,12 @@ export const registerUser = async (userData) => {
 };
 
 // ===============================
-// Login User
+// Get Single Project
 // ===============================
 
-export const loginUser = async (userData) => {
+export const getProjectById = async (id) => {
   try {
-    const response = await API.post("/login", userData);
+    const response = await API.get(`/${id}`);
     return response.data;
   } catch (error) {
     throw error;
@@ -77,12 +77,38 @@ export const loginUser = async (userData) => {
 };
 
 // ===============================
-// Get Logged-in User Profile
+// Create Project
 // ===============================
 
-export const getProfile = async () => {
+export const createProject = async (projectData) => {
   try {
-    const response = await API.get("/profile");
+    const response = await API.post("/", projectData);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// ===============================
+// Update Project
+// ===============================
+
+export const updateProject = async (id, projectData) => {
+  try {
+    const response = await API.put(`/${id}`, projectData);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// ===============================
+// Delete Project
+// ===============================
+
+export const deleteProject = async (id) => {
+  try {
+    const response = await API.delete(`/${id}`);
     return response.data;
   } catch (error) {
     throw error;

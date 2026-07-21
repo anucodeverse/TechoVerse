@@ -5,48 +5,51 @@ require("dotenv").config();
 const connectDB = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
 const protect = require("./middleware/authMiddleware");
+const projectRoutes = require("./routes/projectRoutes");
+const paymentRoutes = require("./routes/paymentRoutes");
 
 const app = express();
 
-// =====================
+// Hide Express Signature
+app.disable("x-powered-by");
+
 // Connect MongoDB
-// =====================
 connectDB();
 
-// =====================
 // CORS Configuration
-// =====================
 app.use(
   cors({
     origin: [
       "http://localhost:5173",
       "https://techo-verse-op9a.vercel.app",
     ],
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
     credentials: true,
   })
 );
 
-// =====================
 // Body Parser
-// =====================
-app.use(express.json());
+app.use(
+  express.json({
+    limit: "10mb",
+  })
+);
 
-// =====================
 // Home Route
-// =====================
 app.get("/", (req, res) => {
   res.send("🚀 TechoVerse Authentication API is Running...");
 });
 
-// =====================
 // Authentication Routes
-// =====================
 app.use("/api/auth", authRoutes);
 
-// =====================
-// Protected Route
-// =====================
+// Project Routes
+app.use("/api/projects", projectRoutes);
+
+// Payment Routes
+app.use("/api/payment", paymentRoutes);
+
+// Protected Profile Route
 app.get("/api/auth/profile", protect, (req, res) => {
   res.status(200).json({
     success: true,
@@ -55,9 +58,7 @@ app.get("/api/auth/profile", protect, (req, res) => {
   });
 });
 
-// =====================
 // 404 Handler
-// =====================
 app.use((req, res) => {
   res.status(404).json({
     success: false,
@@ -65,11 +66,9 @@ app.use((req, res) => {
   });
 });
 
-// =====================
 // Start Server
-// =====================
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-  console.log(`✅ Server running on port ${PORT}`);
+  console.info(`🚀 Server running on port ${PORT}`);
 });

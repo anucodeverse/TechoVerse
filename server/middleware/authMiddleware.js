@@ -1,32 +1,34 @@
 const jwt = require("jsonwebtoken");
 
 // Protect Routes Middleware
-const protect = async (req, res, next) => {
-  let token;
-
+const protect = (req, res, next) => {
   try {
-    // Check if Authorization header exists
+    let token;
+
+    // Check Authorization Header
     if (
       req.headers.authorization &&
-      req.headers.authorization.startsWith("Bearer")
+      req.headers.authorization.startsWith("Bearer ")
     ) {
-      // Get token from header
+      // Extract Token
       token = req.headers.authorization.split(" ")[1];
 
-      // Verify token
+      // Verify JWT
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-      // Save user information in request
+      // Store User Information
       req.user = decoded;
 
-      next();
-    } else {
-      return res.status(401).json({
-        success: false,
-        message: "Not Authorized. Token Missing.",
-      });
+      return next();
     }
+
+    return res.status(401).json({
+      success: false,
+      message: "Not Authorized. Token Missing.",
+    });
   } catch (error) {
+    console.error(error);
+
     return res.status(401).json({
       success: false,
       message: "Not Authorized. Invalid Token.",

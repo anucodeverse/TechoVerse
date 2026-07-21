@@ -1,61 +1,94 @@
-# 🚀 TechoVerse Authentication System
+# 🚀 TechoVerse – AI Powered Project Management Platform
 
-> **Sprint 14 | Prodesk IT Full Stack Development Internship**
+> **Sprint 15 | Prodesk IT Full Stack Development Internship**
 
-A secure Authentication Module for the **TechoVerse AI Powered Project Management Platform**, built using **React.js, Node.js, Express.js, MongoDB Atlas, bcryptjs, and JWT Authentication**.
+A full-stack Project Management Platform built using **React.js, Node.js, Express.js, MongoDB Atlas, JWT Authentication, Stripe Checkout, and Recharts**.
 
 ---
 
 # 📌 Project Overview
 
-The TechoVerse Authentication System is the first phase of the AI Powered Project Management Platform.
+TechoVerse is a secure project management application that enables authenticated users to create, manage, update, and delete projects while visualizing project progress through interactive analytics.
 
-This module enables users to:
-
-- Register securely
-- Login using email and password
-- Store encrypted passwords
-- Authenticate users using JWT
-- Access protected routes
-- Maintain user sessions using React Context API and Local Storage
+Sprint 15 focuses on completing the full CRUD lifecycle, secure data ownership, premium subscription integration, and dashboard analytics.
 
 ---
 
 # 🎯 Sprint Objective
 
-Implement a secure authentication system following industry-standard practices.
+Implement production-ready core functionality by completing:
+
+- Secure CRUD Operations
+- JWT Protected REST APIs
+- User Data Ownership
+- Stripe Payment Integration
+- Dashboard Analytics
+- Responsive UI
 
 ---
 
 # ✨ Features
 
-## Backend
+## Authentication
 
 - User Registration
 - User Login
-- MongoDB Atlas Integration
-- Password Hashing using bcryptjs
-- JWT Token Generation
-- JWT Authentication Middleware
-- Protected Profile API
-- Duplicate Email Validation
-- Required Field Validation
-- 404 Route Handling
+- JWT Authentication
+- Protected Routes
+- React Context API
+- Persistent Login
 
 ---
 
-## Frontend
+## Project Management
 
-- React Router DOM
-- Login Page
-- Register Page
-- Protected Dashboard
-- React Context Authentication
-- Local Storage Session Management
-- Password Show / Hide
-- Loading State
-- Success & Error Messages
-- Automatic Login Redirect
+- Create Projects
+- View User Projects
+- Edit Existing Projects
+- Delete Projects
+- Form Validation
+- Search & Filter Projects
+
+---
+
+## Security
+
+- JWT Protected APIs
+- User Ownership Validation
+- MongoDB Authorization
+- Unauthorized Access Prevention
+- Password Hashing (bcrypt)
+
+---
+
+## Dashboard
+
+- User Statistics
+- Project Summary
+- Completion Rate
+- Premium Membership Status
+- Recent Projects
+- Quick Actions
+- Responsive Layout
+
+---
+
+## Analytics
+
+- Recharts Integration
+- Project Status Visualization
+- Dynamic Dashboard Metrics
+- Real-time Data Updates
+
+---
+
+## Premium Features
+
+- Stripe Checkout Integration
+- Premium Upgrade
+- Premium Badge
+- Subscription Status
+- Payment History
 
 ---
 
@@ -66,6 +99,8 @@ Implement a secure authentication system following industry-standard practices.
 - React.js
 - React Router DOM
 - Axios
+- CSS Modules
+- Recharts
 - React Icons
 
 ---
@@ -86,408 +121,244 @@ Implement a secure authentication system following industry-standard practices.
 
 ## Authentication
 
+- JWT
 - bcryptjs
-- JSON Web Token (JWT)
+
+---
+
+## Payment
+
+- Stripe Checkout (Test Mode)
 
 ---
 
 ## Deployment
 
-- Frontend : Vercel (techo-verse-fg99.vercel.app)
-- Backend : Render (https://techoverse-fpcd.onrender.com)
+- Frontend – Vercel
+- Backend – Render
 
 ---
 
-## 📸 Screenshots
-
-### Login Page
-![Login Page](./images/login.png)
-
-### Registration Page
-![Register Page](./images/register.png)
-
-### Dashboard
-![Dashboard](./images/dashboard.png)
-
-
-
-
-
-# 📂 Project Folder Structure
+# 📂 Project Structure
 
 ```text
 TechoVerse/
 
-│── client/
-│
-├── public/
-│
-├── src/
-│   │
-│   ├── api/
-│   │
-│   ├── assets/
-│   │
-│   ├── components/
-│   │     ├── Navbar.jsx
-│   │     └── ProtectedRoute.jsx
-│   │
-│   ├── context/
-│   │     └── AuthContext.jsx
-│   │
-│   ├── pages/
-│   │     ├── Dashboard.jsx
-│   │     ├── Login.jsx
-│   │     └── Register.jsx
-│   │
-│   ├── services/
-│   │     └── authService.js
-│   │
-│   ├── App.jsx
-│   ├── main.jsx
-│   └── index.css
-│
-├── .gitignore
-├── eslint.config.js
-├── index.html
-├── package.json
-├── package-lock.json
-├── README.md
-└── vite.config.js
+client/
+│── components/
+│── context/
+│── pages/
+│── services/
+│── styles/
 
+server/
+│── config/
+│── controllers/
+│── middleware/
+│── models/
+│── routes/
 
-│── server/
-
-├── config/
-│     └── db.js
-
-├── controllers/
-│     └── authController.js
-
-├── middleware/
-│     └── authMiddleware.js
-
-├── models/
-│     └── User.js
-
-├── routes/
-│     └── authRoutes.js
-
-├── node_modules/
-
-├── .env
-├── .gitignore
-├── package.json
-├── package-lock.json
-├── server.js
-└── testConnection.js
+README.md
+Prompts.md
 ```
 
 ---
 
 # 👤 User Schema
 
-| Field | Type | Description |
-|--------|------|-------------|
-| name | String | User Name |
-| email | String | Unique Email Address |
-| password | String | Hashed Password |
-| role | String | Default: user |
-| createdAt | Date | Auto Generated |
-| updatedAt | Date | Auto Generated |
+| Field | Type |
+|---------|------|
+| name | String |
+| email | String |
+| password | String |
+| isPremium | Boolean |
+| plan | String |
+| paymentDate | Date |
+| stripeSessionId | String |
+| createdAt | Date |
+| updatedAt | Date |
 
 ---
 
-# 🔐 Authentication Flow
+# 📦 Project Schema
 
-## User Registration
-
-- User enters Name, Email and Password.
-- Required fields are validated.
-- Existing email is checked.
-- Password is hashed using bcryptjs.
-- User is stored in MongoDB Atlas.
-- Registration success response is returned.
-
----
-
-## User Login
-
-- User enters Email and Password.
-- Email is verified.
-- Password is compared using bcrypt.compare().
-- JWT token is generated.
-- User data and token are returned.
-- Token is stored in Local Storage.
-- User is redirected to Dashboard.
+| Field | Type |
+|---------|------|
+| title | String |
+| description | String |
+| status | String |
+| user | ObjectId |
+| createdAt | Date |
+| updatedAt | Date |
 
 ---
 
-# 🔒 Password Security
+# 🔐 Security
 
-Passwords are securely hashed before storing them in MongoDB Atlas.
-
-Example Stored Password
-
-```
-$2b$10$Q6KXB0t4FagMei5DpA.q.QecIK...
-```
-
-Passwords are never stored in plain text.
+- JWT Authentication
+- Protected Middleware
+- User Ownership Validation
+- Secure Password Hashing
+- Environment Variables
+- MongoDB Access Control
 
 ---
 
-# 🔑 JWT Authentication
+# 📡 REST APIs
 
-After successful login:
+## Authentication
 
-- JWT Token is generated
-- Token validity: **7 Days**
-- Stored in browser Local Storage
-- Required for accessing protected APIs
-
-Authorization Header
-
-```
-Authorization: Bearer YOUR_JWT_TOKEN
-```
-
----
-
-# 🛡 Protected Route
-
-Protected Endpoint
-
-```
-GET /api/auth/profile
-```
-
-If Token Exists
-
-```json
-{
-  "success": true,
-  "message": "Welcome to TechoVerse Dashboard",
-  "user": {
-    "id": "USER_ID"
-  }
-}
-```
-
-If Token Missing
-
-```json
-{
-  "success": false,
-  "message": "Not Authorized. Token Missing."
-}
-```
-
-If Token Invalid
-
-```json
-{
-  "success": false,
-  "message": "Not Authorized. Invalid Token."
-}
-```
-
----
-
-# 📡 REST API Endpoints
-
-## Register User
-
-```
 POST /api/auth/register
-```
 
-Request
-
-```json
-{
-"name":"Anantha Lakshmi",
-"email":"user@gmail.com",
-"password":"Password123"
-}
-```
-
----
-
-## Login User
-
-```
 POST /api/auth/login
-```
 
-Request
-
-```json
-{
-"email":"user@gmail.com",
-"password":"Password123"
-}
-```
-
-Response
-
-```json
-{
-"success":true,
-"message":"Login Successful",
-"token":"JWT_TOKEN",
-"user":{
-"id":"USER_ID",
-"name":"Anantha Lakshmi",
-"email":"user@gmail.com"
-}
-}
-```
-
----
-
-## Protected Profile
-
-```
 GET /api/auth/profile
-```
-
-Headers
-
-```
-Authorization: Bearer JWT_TOKEN
-```
 
 ---
 
-# ⚙ Environment Variables
+## Projects
 
-Create a `.env` file inside the **server** folder.
+GET /api/projects
 
-```env
-PORT=5000
+POST /api/projects
 
-MONGO_URI=YOUR_MONGODB_ATLAS_CONNECTION_STRING
+PUT /api/projects/:id
 
-JWT_SECRET=YOUR_SECRET_KEY
-```
+DELETE /api/projects/:id
 
 ---
 
-# ▶ Installation
+## Payments
 
-## Clone Repository
+POST /api/payment/create-checkout-session
 
-```bash
-git clone [https://github.com/anucodeverse/TechoVerse]
-```
+GET /api/payment/success
 
 ---
 
-## Backend
+# 📊 Dashboard Features
 
-```bash
-cd server
-
-npm install
-
-npm run dev
-```
+- Total Projects
+- Completed Projects
+- Pending Projects
+- In Progress Projects
+- Completion Percentage
+- Premium Status
+- Project Analytics Chart
+- Recent Projects
 
 ---
 
-## Frontend
+# 📈 CRUD Workflow
 
-```bash
-cd client
+✅ Create Project
 
-npm install
+✅ Read Projects
 
-npm run dev
-```
+✅ Update Project
+
+✅ Delete Project
+
+All operations update the UI instantly without page refresh.
+
+---
+
+# 💳 Stripe Integration
+
+- Test Mode Checkout
+- Premium Upgrade
+- Secure Payment Flow
+- Success Redirect
+- Premium Status Update
+- Payment Stored in MongoDB
 
 ---
 
 # 🧪 Testing
 
-Authentication APIs can be tested using:
+Completed Test Cases
 
-- Postman
-- Thunder Client
-
-Test Cases
-
-- Register New User
-- Register Existing User
-- Login Successfully
-- Invalid Login
-- Protected Route with JWT
-- Protected Route without JWT
-
----
-
-# 📊 MongoDB Verification
-
-User passwords are successfully stored as **bcrypt hashed values**.
-
-Example Database Fields
-
-```
-_id
-name
-email
-password (hashed)
-role
-createdAt
-updatedAt
-```
+- User Registration
+- User Login
+- Protected Routes
+- JWT Validation
+- Create Project
+- Read Projects
+- Update Project
+- Delete Project
+- Unauthorized Access
+- Dashboard Analytics
+- Stripe Checkout
+- Premium Upgrade
+- Responsive Design
 
 ---
 
-# 🚀 Sprint 14 Completion Status
+# 🚀 Sprint 15 Completion
 
 | Feature | Status |
 |----------|--------|
-| User Registration | ✅ |
-| User Login | ✅ |
-| MongoDB Atlas | ✅ |
-| Mongoose Schema | ✅ |
-| bcrypt Password Hashing | ✅ |
-| JWT Authentication | ✅ |
-| Protected Middleware | ✅ |
-| Protected Dashboard | ✅ |
-| React Context API | ✅ |
-| Local Storage Authentication | ✅ |
-| Axios API Integration | ✅ |
-| Password Show / Hide | ✅ |
-| Error Handling | ✅ |
+| Authentication | ✅ |
+| JWT Protection | ✅ |
+| Project CRUD | ✅ |
+| MongoDB Integration | ✅ |
+| Ownership Validation | ✅ |
+| Dashboard Analytics | ✅ |
+| Recharts | ✅ |
+| Stripe Checkout | ✅ |
+| Premium Membership | ✅ |
+| Responsive Dashboard | ✅ |
 
 ---
 
-# 📈 Future Enhancements
+# 📅 Sprint Roadmap
 
-- Password Strength Meter
-- Forgot Password
-- Reset Password
-- Email Verification
-- Role-Based Authorization
-- Refresh Tokens
-- Multi-Factor Authentication
-- AI Authentication Assistant
+### Sprint 13
+- Product Planning
+- PRD
+- Wireframes
+- ERD
+- Architecture
+
+### Sprint 14
+- Authentication
+- JWT
+- Protected Routes
+
+### Sprint 15
+- Complete CRUD
+- Dashboard Analytics
+- Stripe Integration
+- Premium Features
+
+### Sprint 16
+- UI Polish
+- AI Assistant
+- Notifications
+- Calendar
+- Team Collaboration
+
+---
+
+# 📚 Documentation
+
+- README
+- Prompts.md
+- ERD
+- Architecture Diagram
+- API Documentation
 
 ---
 
 # 👩‍💻 Author
 
-**Name:** Anantha Lakshmi
+**Anantha Lakshmi**
 
-**Internship:** Prodesk IT
+Prodesk IT – Full Stack Development Internship
 
-**Track:** Full Stack Development
+Project: **TechoVerse**
 
-**Sprint:** Sprint 14
-
-**Project:** TechoVerse Authentication System
+Sprint: **15 – Feature Complete CRUD & Dashboard Analytics**
 
 ---
 

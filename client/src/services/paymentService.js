@@ -5,8 +5,12 @@ import axios from "axios";
 // ===============================
 
 const API = axios.create({
-  baseURL: `${import.meta.env.VITE_API_URL}/auth`,
+  baseURL:
+    import.meta.env.VITE_API_URL ||
+    "http://localhost:5000/api",
+
   timeout: 10000,
+
   headers: {
     "Content-Type": "application/json",
   },
@@ -50,39 +54,35 @@ API.interceptors.response.use(
   }
 );
 
-// ===============================
-// Register User
-// ===============================
+// =====================================
+// Create Stripe Checkout Session
+// =====================================
 
-export const registerUser = async (userData) => {
+export const createCheckoutSession = async () => {
   try {
-    const response = await API.post("/register", userData);
+    const response = await API.post(
+      "/payment/create-checkout-session"
+    );
+
     return response.data;
   } catch (error) {
     throw error;
   }
 };
 
-// ===============================
-// Login User
-// ===============================
+// =====================================
+// Verify Stripe Payment
+// =====================================
 
-export const loginUser = async (userData) => {
+export const verifyPayment = async (sessionId) => {
   try {
-    const response = await API.post("/login", userData);
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
-};
+    const response = await API.post(
+      "/payment/verify-payment",
+      {
+        sessionId,
+      }
+    );
 
-// ===============================
-// Get Logged-in User Profile
-// ===============================
-
-export const getProfile = async () => {
-  try {
-    const response = await API.get("/profile");
     return response.data;
   } catch (error) {
     throw error;

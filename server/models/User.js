@@ -4,26 +4,45 @@ const userSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: true,
+      required: [true, "Name is required"],
       trim: true,
     },
 
     email: {
       type: String,
-      required: true,
+      required: [true, "Email is required"],
       unique: true,
-      lowercase: true,
       trim: true,
+      lowercase: true,
+      match: [/\S+@\S+\.\S+/, "Please enter a valid email address"],
     },
 
     password: {
       type: String,
-      required: true,
+      required: [true, "Password is required"],
     },
 
-    role: {
+    // Stripe Subscription
+
+    isPremium: {
+      type: Boolean,
+      default: false,
+    },
+
+    plan: {
       type: String,
-      default: "user",
+      enum: ["Free", "Premium"],
+      default: "Free",
+    },
+
+    paymentDate: {
+      type: Date,
+      default: null,
+    },
+
+    stripeSessionId: {
+      type: String,
+      default: null,
     },
   },
   {

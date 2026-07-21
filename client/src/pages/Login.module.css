@@ -1,82 +1,897 @@
-.container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background: #f4f4f4;
+:global(body){
+  margin:0;
+  padding:0;
+  font-family:"Inter","Segoe UI",sans-serif;
+  overflow-x:hidden;
+ 
 }
 
-.card {
-  width: 360px;
-  background: #fff;
-  padding: 25px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  text-align: center;
+
+:global(#root){
+  min-height:100vh;
 }
 
-.input {
-  width: 100%;
-  padding: 12px;
-  margin: 10px 0;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-sizing: border-box;
+
+
+/* =========================
+   Login Page Container
+========================= */
+
+
+.container{
+
+  width:100vw;
+  height:100vh;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  gap:80px;
+
+  overflow:hidden;
+
+  background:
+  linear-gradient(
+    135deg,
+    #0f172a,
+    #2563eb,
+    #38bdf8
+  );
+
 }
 
-.passwordContainer {
-  position: relative;
-  margin: 10px 0;
+
+
+
+@keyframes fadeIn{
+
+from{
+
+opacity:0;
+
+transform:translateY(20px);
+
 }
 
-.passwordInput {
-  width: 100%;
-  padding: 12px;
-  padding-right: 45px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-sizing: border-box;
+
+to{
+
+opacity:1;
+
+transform:translateY(0);
+
 }
 
-.eye {
-  position: absolute;
-  right: 15px;
-  top: 50%;
-  transform: translateY(-50%);
-  cursor: pointer;
-  font-size: 18px;
-  color: #555;
 }
 
-.button {
-  width: 100%;
-  padding: 12px;
-  background: #2563eb;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  margin-top: 10px;
+
+
+
+
+
+
+/* =========================
+   Brand Section
+========================= */
+
+
+.brandSection{
+
+
+width:420px;
+
+color:white;
+
+
+animation:
+
+slideLeft .7s ease;
+
+
 }
 
-.button:hover {
-  background: #1d4ed8;
+
+
+@keyframes slideLeft{
+
+from{
+
+opacity:0;
+
+transform:translateX(-40px);
+
 }
 
-.button:disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
+
+to{
+
+opacity:1;
+
+transform:translateX(0);
+
 }
 
-.error {
-  color: #dc2626;
-  font-weight: bold;
-  margin-bottom: 10px;
 }
 
-.registerText {
-  margin-top: 15px;
+
+
+
+.logo{
+
+
+width:70px;
+
+height:70px;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+
+font-size:38px;
+
+
+background:
+
+rgba(255,255,255,.15);
+
+
+border-radius:20px;
+
+
+backdrop-filter:
+
+blur(10px);
+
+
+margin-bottom:25px;
+
+
+}
+
+
+
+
+.brandSection h1{
+
+
+font-size:48px;
+
+font-weight:800;
+
+margin-bottom:10px;
+
+
+letter-spacing:-1px;
+
+
+}
+
+
+
+
+
+.brandSection h2{
+
+
+font-size:28px;
+
+font-weight:600;
+
+
+margin-bottom:18px;
+
+
+}
+
+
+
+
+
+.brandSection p{
+
+
+font-size:17px;
+
+line-height:1.7;
+
+
+opacity:.9;
+
+
+}
+
+
+
+
+
+/* =========================
+ Features
+========================= */
+
+
+.features{
+
+
+margin-top:35px;
+
+
+display:flex;
+
+flex-direction:column;
+
+gap:18px;
+
+
+}
+
+
+
+
+.features div{
+
+
+display:flex;
+
+align-items:center;
+
+gap:15px;
+
+
+font-size:16px;
+
+
+}
+
+
+
+.features svg{
+
+
+font-size:22px;
+
+
+color:#93c5fd;
+
+
+}
+
+
+
+
+
+
+
+/* =========================
+ Login Card
+========================= */
+
+
+.card{
+
+
+width:420px;
+
+
+padding:45px;
+
+
+border-radius:25px;
+
+
+background:
+
+rgba(255,255,255,.95);
+
+
+box-shadow:
+
+
+0 25px 60px rgba(0,0,0,.25);
+
+
+animation:
+
+
+slideRight .7s ease;
+
+
+}
+
+
+
+@keyframes slideRight{
+
+from{
+
+opacity:0;
+
+transform:translateX(40px);
+
+}
+
+
+to{
+
+opacity:1;
+
+transform:translateX(0);
+
+}
+
+}
+
+
+
+
+
+
+
+.card h1{
+
+
+font-size:34px;
+
+
+font-weight:800;
+
+
+color:#0f172a;
+
+
+margin-bottom:10px;
+
+
+}
+
+
+
+
+
+.subtitle{
+
+
+color:#64748b;
+
+
+font-size:16px;
+
+
+margin-bottom:30px;
+
+
+}
+
+
+
+
+
+
+
+/* =========================
+ Labels
+========================= */
+
+
+.card label{
+
+
+display:block;
+
+
+font-size:14px;
+
+
+font-weight:600;
+
+
+color:#334155;
+
+
+margin-bottom:8px;
+
+
+}
+
+
+
+
+
+
+
+
+/* =========================
+ Inputs
+========================= */
+
+
+.input,
+.passwordInput{
+
+
+width:100%;
+
+
+padding:15px 16px;
+
+
+font-size:16px;
+
+
+border-radius:12px;
+
+
+border:1px solid #cbd5e1;
+
+
+outline:none;
+
+
+transition:.3s ease;
+
+
+background:#f8fafc;
+
+
+}
+
+
+
+
+.input:focus,
+.passwordInput:focus{
+
+
+border-color:#2563eb;
+
+
+background:white;
+
+
+box-shadow:
+
+0 0 0 4px rgba(37,99,235,.15);
+
+
+}
+
+
+
+
+
+
+/* =========================
+ Password
+========================= */
+
+
+.passwordContainer{
+
+
+position:relative;
+
+
+margin-bottom:25px;
+
+
+}
+
+
+
+
+.passwordInput{
+
+
+padding-right:50px;
+
+
+}
+
+
+
+.eye{
+
+
+position:absolute;
+
+
+right:15px;
+
+top:50%;
+
+
+transform:
+
+translateY(-50%);
+
+
+border:none;
+
+
+background:none;
+
+
+cursor:pointer;
+
+
+font-size:20px;
+
+
+color:#64748b;
+
+
+display:flex;
+
+
+align-items:center;
+
+
+}
+
+
+
+.eye:hover{
+
+
+color:#2563eb;
+
+
+}
+
+
+
+
+
+
+
+/* =========================
+ Button
+========================= */
+
+
+.button{
+
+
+width:100%;
+
+
+padding:15px;
+
+
+border:none;
+
+
+border-radius:14px;
+
+
+font-size:17px;
+
+
+font-weight:700;
+
+
+cursor:pointer;
+
+
+color:white;
+
+
+background:
+
+
+linear-gradient(
+
+135deg,
+
+#2563eb,
+
+#1d4ed8
+
+);
+
+
+
+transition:.3s ease;
+
+
+margin-top:10px;
+
+
+}
+
+
+
+
+
+.button:hover{
+
+
+transform:
+
+translateY(-3px);
+
+
+box-shadow:
+
+
+0 15px 30px rgba(37,99,235,.35);
+
+
+}
+
+
+
+
+.button:active{
+
+
+transform:
+
+scale(.97);
+
+
+}
+
+
+
+
+
+.button:disabled{
+
+
+opacity:.6;
+
+
+cursor:not-allowed;
+
+
+}
+
+
+
+
+
+
+
+/* =========================
+ Error
+========================= */
+
+
+.error{
+
+
+background:#fee2e2;
+
+
+color:#b91c1c;
+
+
+padding:12px 15px;
+
+
+border-radius:12px;
+
+
+font-size:14px;
+
+
+font-weight:600;
+
+
+margin-bottom:20px;
+
+
+}
+
+
+
+
+
+
+
+/* =========================
+ Register
+========================= */
+
+
+.registerText{
+
+
+text-align:center;
+
+
+margin-top:25px;
+
+
+color:#64748b;
+
+
+font-size:15px;
+
+
+}
+
+
+
+
+.registerText a{
+
+
+color:#2563eb;
+
+
+font-weight:700;
+
+
+text-decoration:none;
+
+
+margin-left:5px;
+
+
+}
+
+
+
+.registerText a:hover{
+
+
+text-decoration:underline;
+
+
+}
+
+
+
+
+
+
+
+
+/* =========================
+ Tablet
+========================= */
+
+
+@media(max-width:1000px){
+
+
+.container{
+
+
+flex-direction:column;
+
+
+gap:40px;
+
+
+padding:30px;
+
+
+}
+
+
+
+
+.brandSection{
+
+
+text-align:center;
+
+
+width:100%;
+
+
+}
+
+
+
+
+.features{
+
+
+align-items:center;
+
+
+}
+
+
+
+
+.card{
+
+
+width:100%;
+
+
+max-width:420px;
+
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+/* =========================
+ Mobile
+========================= */
+
+
+@media(max-width:600px){
+
+
+
+.container{
+
+
+padding:20px;
+
+
+}
+
+
+
+.brandSection h1{
+
+
+font-size:36px;
+
+
+}
+
+
+
+.brandSection h2{
+
+
+font-size:22px;
+
+
+}
+
+
+
+.brandSection p{
+
+
+font-size:15px;
+
+
+}
+
+
+
+.card{
+
+
+padding:30px 25px;
+
+
+border-radius:20px;
+
+
+}
+
+
+
+.card h1{
+
+
+font-size:28px;
+
+
+}
+
+
 }

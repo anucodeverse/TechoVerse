@@ -16,14 +16,34 @@ app.disable("x-powered-by");
 // Connect MongoDB
 connectDB();
 
+
 // CORS Configuration
-// CORS Configuration
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://techo-verse-fg99.vercel.app",
+];
+
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      "https://techo-verse-fg99.vercel.app",
-    ],
+    origin: (origin, callback) => {
+      // Allow requests without origin (Postman, mobile apps)
+      if (!origin) {
+        return callback(null, true);
+      }
+
+      // Allow main Vercel domain and preview deployments
+      if (
+        origin.endsWith(".vercel.app")
+      ) {
+        return callback(null, true);
+      }
+
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+
+      return callback(new Error("Not allowed by CORS"));
+    },
     methods: [
       "GET",
       "POST",
@@ -39,7 +59,6 @@ app.use(
     credentials: true,
   })
 );
-
 // Body Parser
 app.use(
   express.json({

@@ -15,93 +15,78 @@ const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 exports.createCheckoutSession = async (req, res) => {
   try {
 
-    // Get logged-in user id
-    const userId = req.user._id.toString();
+    const userId = (
+      req.user._id || req.user.id
+    ).toString();
 
 
-    // Check user exists
     const user = await User.findById(userId);
 
 
     if (!user) {
       return res.status(404).json({
-        success: false,
-        message: "User not found",
+        success:false,
+        message:"User not found",
       });
     }
 
 
-    // Prevent duplicate premium purchase
     if (user.isPremium) {
       return res.status(400).json({
-        success: false,
-        message: "You already have a Premium plan.",
+        success:false,
+        message:"You already have a Premium plan.",
       });
     }
 
 
 
-    // Create Stripe Checkout Session
     const session =
       await stripe.checkout.sessions.create({
 
-        payment_method_types: [
+        payment_method_types:[
           "card"
         ],
 
 
-        line_items: [
+        line_items:[
 
           {
-            price_data: {
+            price_data:{
 
-              currency: "usd",
+              currency:"usd",
 
-
-              product_data: {
-
-                name:
-                  "TechoVerse Premium Plan",
-
+              product_data:{
+                name:"TechoVerse Premium Plan",
                 description:
-                  "Unlimited projects, analytics and collaboration features",
-
+                "Unlimited projects, analytics and collaboration features",
               },
 
-
-              unit_amount: 999,
+              unit_amount:999,
 
             },
 
-
-            quantity: 1,
-
-          },
+            quantity:1,
+          }
 
         ],
 
 
-        mode: "payment",
+        mode:"payment",
 
 
 
-        // Store user id in Stripe
-        metadata: {
-
-          userId: userId.toString(),
-
+        metadata:{
+          userId:userId,
         },
 
 
 
         success_url:
-          `${process.env.CLIENT_URL}/payment-success?session_id={CHECKOUT_SESSION_ID}`,
-
+        `${process.env.CLIENT_URL}/payment-success?session_id={CHECKOUT_SESSION_ID}`,
 
 
         cancel_url:
-          `${process.env.CLIENT_URL}/payment-cancel`,
-
+        `${process.env.CLIENT_URL}/payment-cancel`,
 
       });
 
@@ -110,7 +95,6 @@ exports.createCheckoutSession = async (req, res) => {
     return res.status(200).json({
 
       success:true,
-
       url:session.url,
 
     });
@@ -118,7 +102,6 @@ exports.createCheckoutSession = async (req, res) => {
 
 
   } catch(error) {
-
 
     console.error(
       "Stripe Checkout Error:",
@@ -129,12 +112,9 @@ exports.createCheckoutSession = async (req, res) => {
     return res.status(500).json({
 
       success:false,
-
-      message:
-        "Checkout session creation failed",
+      message:"Checkout session creation failed",
 
     });
-
 
   }
 
@@ -143,238 +123,207 @@ exports.createCheckoutSession = async (req, res) => {
 
 
 
-
 // ======================================
 // Verify Payment
 // ======================================
 
-exports.verifyPayment = async (req,res)=>{
+exports.verifyPayment = async(req,res)=>{
 
-  try {
+try{
 
 
-    const {
-      sessionId
-    } = req.body;
+const {sessionId}=req.body;
 
 
 
-    if(!sessionId){
+if(!sessionId){
 
-      return res.status(400).json({
+return res.status(400).json({
 
-        success:false,
+success:false,
+message:"Session ID required"
 
-        message:
-          "Session ID required",
+});
 
-      });
+}
 
-    }
 
 
+// Retrieve Stripe Session
 
-    // Retrieve Stripe Session
+const session =
+await stripe.checkout.sessions.retrieve(
+sessionId
+);
 
-    const session =
-      await stripe.checkout.sessions.retrieve(
-        sessionId
-      );
 
 
+console.log(
+"Stripe Metadata:",
+session.metadata
+);
 
-    // Check payment status
 
-    if(
-      session.payment_status !== "paid"
-    ){
 
-      return res.status(400).json({
+if(session.payment_status !== "paid"){
 
-        success:false,
+return res.status(400).json({
 
-        message:
-          "Payment not completed",
+success:false,
+message:"Payment not completed"
 
-      });
+});
 
-    }
+}
 
 
 
-    // Compare users
+// Get IDs safely
 
-    const paidUserId =
-      session.metadata.userId.toString();
+const paidUserId =
+session.metadata.userId?.toString();
 
 
 
-    const loggedUserId =
-      req.user._id.toString();
+const loggedUserId =
+(
+req.user._id ||
+req.user.id
+).toString();
 
 
 
-    console.log(
-      "Stripe User ID:",
-      paidUserId
-    );
+console.log(
+"Stripe User ID:",
+paidUserId
+);
 
 
-    console.log(
-      "Logged User ID:",
-      loggedUserId
-    );
 
+console.log(
+"Logged User ID:",
+loggedUserId
+);
 
 
-    if(
-      paidUserId !== loggedUserId
-    ){
 
-      return res.status(403).json({
+// Verify ownership
 
-        success:false,
+if(!paidUserId || paidUserId !== loggedUserId){
 
-        message:
-          "Payment does not belong to this user",
+return res.status(403).json({
 
-      });
+success:false,
 
-    }
+message:
+"Payment does not belong to this user"
 
+});
 
+}
 
-    // Find user
 
-    const user =
-      await User.findById(
-        req.user._id
-      );
 
+// Find user
 
+const user =
+await User.findById(loggedUserId);
 
-    if(!user){
 
-      return res.status(404).json({
 
-        success:false,
+if(!user){
 
-        message:
-          "User not found",
+return res.status(404).json({
 
-      });
+success:false,
 
-    }
+message:"User not found"
 
+});
 
+}
 
 
-    // Already premium
 
-    if(user.isPremium){
+// Already premium
 
-      return res.status(200).json({
+if(user.isPremium){
 
-        success:true,
+return res.status(200).json({
 
-        message:
-          "Already Premium",
+success:true,
 
+message:"Already Premium",
 
-        user:{
+user:{
+id:user._id,
+name:user.name,
+email:user.email,
+isPremium:user.isPremium,
+plan:user.plan,
+paymentDate:user.paymentDate
+}
 
-          id:user._id,
+});
 
-          name:user.name,
+}
 
-          email:user.email,
 
-          isPremium:user.isPremium,
 
-          plan:user.plan,
+// Activate Premium
 
-          paymentDate:user.paymentDate,
+user.isPremium=true;
 
-        },
+user.plan="Premium";
 
+user.paymentDate=new Date();
 
-      });
+user.stripeSessionId=session.id;
 
-    }
 
+await user.save();
 
 
 
+return res.status(200).json({
 
-    // Activate Premium
+success:true,
 
-    user.isPremium = true;
+message:"Premium activated successfully",
 
-    user.plan = "Premium";
+user:{
+id:user._id,
+name:user.name,
+email:user.email,
+isPremium:user.isPremium,
+plan:user.plan,
+paymentDate:user.paymentDate
+}
 
-    user.paymentDate = new Date();
+});
 
-    user.stripeSessionId =
-      session.id;
 
 
+}
 
-    await user.save();
+catch(error){
 
+console.error(
+"Verify Payment Error:",
+error
+);
 
 
+return res.status(500).json({
 
+success:false,
 
-    return res.status(200).json({
+message:
+"Payment verification failed"
 
-      success:true,
+});
 
-      message:
-        "Premium activated successfully",
 
-
-      user:{
-
-        id:user._id,
-
-        name:user.name,
-
-        email:user.email,
-
-        isPremium:user.isPremium,
-
-        plan:user.plan,
-
-        paymentDate:user.paymentDate,
-
-      },
-
-
-    });
-
-
-
-  }
-
-  catch(error){
-
-
-    console.error(
-      "Verify Payment Error:",
-      error
-    );
-
-
-    return res.status(500).json({
-
-      success:false,
-
-      message:
-        "Payment verification failed",
-
-    });
-
-
-  }
+}
 
 };

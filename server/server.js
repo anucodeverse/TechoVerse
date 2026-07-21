@@ -17,13 +17,25 @@ app.disable("x-powered-by");
 connectDB();
 
 // CORS Configuration
+// CORS Configuration
 app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "https://techo-verse-op9a.vercel.app",
+      "https://techo-verse-fg99.vercel.app",
     ],
-    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+    methods: [
+      "GET",
+      "POST",
+      "PUT",
+      "PATCH",
+      "DELETE",
+      "OPTIONS",
+    ],
+    allowedHeaders: [
+      "Content-Type",
+      "Authorization",
+    ],
     credentials: true,
   })
 );

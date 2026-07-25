@@ -75,13 +75,14 @@ app.get("/", (req, res) => {
 app.use("/api/auth", authRoutes);
 
 
-app.use("/api/ai", aiRoutes);
-
 // Project Routes
 app.use("/api/projects", projectRoutes);
 
 // Payment Routes
 app.use("/api/payment", paymentRoutes);
+
+// AI Routes
+app.use("/api/ai", aiRoutes);
 
 // Protected Profile Route
 app.get("/api/auth/profile", protect, (req, res) => {

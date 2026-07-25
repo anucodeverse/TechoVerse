@@ -7,7 +7,7 @@ const authRoutes = require("./routes/authRoutes");
 const protect = require("./middleware/authMiddleware");
 const projectRoutes = require("./routes/projectRoutes");
 const paymentRoutes = require("./routes/paymentRoutes");
-
+const aiRoutes = require("./routes/aiRoutes");
 const app = express();
 
 // Hide Express Signature
@@ -73,6 +73,9 @@ app.get("/", (req, res) => {
 
 // Authentication Routes
 app.use("/api/auth", authRoutes);
+
+
+app.use("/api/ai", aiRoutes);
 
 // Project Routes
 app.use("/api/projects", projectRoutes);

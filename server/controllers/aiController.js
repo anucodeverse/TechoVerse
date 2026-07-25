@@ -1,0 +1,52 @@
+const {
+  generateTaskSuggestions,
+} = require("../services/aiService");
+
+
+const suggestTasks = async (req, res) => {
+
+  try {
+
+    const {
+      projectTitle,
+      description,
+    } = req.body;
+
+
+    if (!projectTitle || !description) {
+      return res.status(400).json({
+        success:false,
+        message:
+        "Project title and description are required.",
+      });
+    }
+
+
+    const suggestions =
+      await generateTaskSuggestions(
+        projectTitle,
+        description
+      );
+
+
+    res.status(200).json({
+      success:true,
+      suggestions,
+    });
+
+
+  } catch(error){
+
+    res.status(500).json({
+      success:false,
+      message:"AI generation failed",
+    });
+
+  }
+
+};
+
+
+module.exports = {
+  suggestTasks,
+};

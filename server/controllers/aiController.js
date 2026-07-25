@@ -1,6 +1,6 @@
 const {
   generateTaskSuggestions,
-} = require("../services/aiService");
+} = require("../services/geminiService");
 
 
 const suggestTasks = async (req, res) => {

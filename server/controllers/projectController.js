@@ -1,6 +1,9 @@
 const Project = require("../models/Project");
 const User = require("../models/User");
-
+const {
+  createProjectSchema,
+  updateProjectSchema,
+} = require("../validation/projectValidation");
 // ======================================
 // Create Project
 // POST /api/projects
@@ -8,16 +11,16 @@ const User = require("../models/User");
 
 const createProject = async (req, res) => {
   try {
-    const title = req.body.title?.trim();
-    const description = req.body.description?.trim();
-    const { status } = req.body;
+    const { error, value } = createProjectSchema.validate(req.body);
 
-    if (!title || !description) {
-      return res.status(400).json({
-        success: false,
-        message: "Title and Description are required.",
-      });
-    }
+if (error) {
+  return res.status(400).json({
+    success: false,
+    message: error.details[0].message,
+  });
+}
+
+const { title, description, status } = value;
 
     // Find logged-in user
     const user = await User.findById(req.user.id);
@@ -60,7 +63,7 @@ const createProject = async (req, res) => {
 
     res.status(500).json({
       success: false,
-      message: error.message,
+       message: "Internal Server Error",
     });
   }
 };
@@ -88,7 +91,7 @@ const getProjects = async (req, res) => {
 
     res.status(500).json({
       success: false,
-      message: error.message,
+      message: "Internal Server Error",
     });
   }
 };
@@ -121,7 +124,7 @@ const getProjectById = async (req, res) => {
 
     res.status(500).json({
       success: false,
-      message: error.message,
+       message: "Internal Server Error",
     });
   }
 };
@@ -133,8 +136,17 @@ const getProjectById = async (req, res) => {
 const updateProject = async (req, res) => {
   try {
     // Find project by ID
-    const project = await Project.findById(req.params.id);
+   
 
+    const { error, value } = updateProjectSchema.validate(req.body);
+    if (error) {
+       return res.status(400).json({
+        success: false,
+       message: error.details[0].message,
+       });
+      }
+       const project = await Project.findById(req.params.id);
+       
     // Check if project exists
     if (!project) {
       return res.status(404).json({
@@ -152,10 +164,9 @@ const updateProject = async (req, res) => {
     }
 
     // Update only provided fields
-    project.title = req.body.title?.trim() || project.title;
-    project.description =
-      req.body.description?.trim() || project.description;
-    project.status = req.body.status || project.status;
+    project.title = value.title ?? project.title;
+project.description = value.description ?? project.description;
+project.status = value.status ?? project.status;
 
     // Save updated project
     await project.save();
@@ -170,7 +181,7 @@ const updateProject = async (req, res) => {
 
     res.status(500).json({
       success: false,
-      message: error.message,
+       message: "Internal Server Error",
     });
   }
 };
@@ -213,7 +224,7 @@ const deleteProject = async (req, res) => {
 
     res.status(500).json({
       success: false,
-      message: error.message,
+       message: "Internal Server Error",
     });
   }
 };

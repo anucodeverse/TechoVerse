@@ -1,43 +1,28 @@
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-
+const {
+  registerSchema,
+  loginSchema,
+} = require("../validation/authValidation");
 // ================= REGISTER =================
 
 const registerUser = async (req, res) => {
   try {
     let { name, email, password } = req.body;
 
-    // Trim Inputs
-    name = name?.trim();
-    email = email?.trim().toLowerCase();
-    password = password?.trim();
+   const { error, value } = registerSchema.validate(req.body);
 
-    // Validation
-    if (!name || !email || !password) {
-      return res.status(400).json({
-        success: false,
-        message: "Please fill all fields",
-      });
-    }
+if (error) {
+  return res.status(400).json({
+    success: false,
+    message: error.details[0].message,
+  });
+}
 
-    // Email Validation
-    const emailRegex = /\S+@\S+\.\S+/;
-
-    if (!emailRegex.test(email)) {
-      return res.status(400).json({
-        success: false,
-        message: "Invalid email address",
-      });
-    }
-
-    // Password Validation
-    if (password.length < 6) {
-      return res.status(400).json({
-        success: false,
-        message: "Password must contain minimum 6 characters",
-      });
-    }
+name = value.name;
+email = value.email.toLowerCase();
+password = value.password;
 
     // Check Existing User
     const existingUser = await User.findOne({
@@ -91,15 +76,17 @@ const loginUser = async (req, res) => {
   try {
     let { email, password } = req.body;
 
-    email = email?.trim().toLowerCase();
-    password = password?.trim();
+    const { error, value } = loginSchema.validate(req.body);
 
-    if (!email || !password) {
-      return res.status(400).json({
-        success: false,
-        message: "Email and password required",
-      });
-    }
+if (error) {
+  return res.status(400).json({
+    success: false,
+    message: error.details[0].message,
+  });
+}
+
+email = value.email.toLowerCase();
+password = value.password;
 
     const user = await User.findOne({
       email,

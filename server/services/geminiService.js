@@ -4,33 +4,17 @@ const ai = new GoogleGenAI({
   apiKey: process.env.GEMINI_API_KEY,
 });
 
-const generateTaskSuggestions = async (
-  projectTitle,
-  description
-) => {
+async function testModel() {
+  try {
+    const response = await ai.models.generateContent({
+      model: "gemini-2.5-flash",
+      contents: "Say Hello",
+    });
 
-  const prompt = `
-You are an AI project management assistant.
+    console.log(response.text);
+  } catch (err) {
+    console.error(err);
+  }
+}
 
-Project Title:
-${projectTitle}
-
-Project Description:
-${description}
-
-Generate 6 development tasks for this project.
-
-Return only a bullet list.
-`;
-
-  const response = await ai.models.generateContent({
-    model: "gemini-2.5-flash",
-    contents: prompt,
-  });
-
-  return response.text;
-};
-
-module.exports = {
-  generateTaskSuggestions,
-};
+testModel();

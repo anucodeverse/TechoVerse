@@ -107,3 +107,19 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.info(`🚀 Server running on port ${PORT}`);
 });
+
+const { GoogleGenAI } = require("@google/genai");
+
+const ai = new GoogleGenAI({
+  apiKey: process.env.GEMINI_API_KEY,
+});
+
+app.get("/models", async (req, res) => {
+  try {
+    const models = await ai.models.list();
+    res.json(models);
+  } catch (err) {
+    console.error(err);
+    res.json(err);
+  }
+});

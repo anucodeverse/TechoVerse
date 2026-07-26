@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
-
+import { Sparkles } from "lucide-react";
 import toast from "react-hot-toast";
+
+import { generateTasks } from "../services/aiService";
 
 import {
   createProject,
@@ -45,6 +47,17 @@ function ProjectForm({
   const [loading, setLoading] =
     useState(false);
 
+  /* ==========================
+     AI States
+  ========================== */
+
+  const [aiLoading, setAiLoading] =
+    useState(false);
+
+  const [aiTasks, setAiTasks] =
+    useState([]);
+
+
 
 
   /* ==========================
@@ -75,7 +88,11 @@ function ProjectForm({
 
     }
 
+    // Clear previous AI suggestions
+    setAiTasks([]);
+
   }, [editingProject]);
+
 
 
 
@@ -96,146 +113,65 @@ function ProjectForm({
     }));
 
   };
-  
+
+
+
+
   /* ==========================
-     Handle Submit
+     Generate AI Tasks
   ========================== */
 
-  const handleSubmit = async (e) => {
+  const handleGenerateTasks = async () => {
 
-    e.preventDefault();
+    if (
+      !formData.title.trim() ||
+      !formData.description.trim()
+    ) {
 
-    if (loading) return;
+      toast.error(
+        "Please enter project title and description first."
+      );
 
-    const payload = {
+      return;
 
-      title: formData.title.trim(),
-
-      description: formData.description.trim(),
-
-      status: formData.status,
-
-    };
-
-
+    }
 
     try {
 
-      /* =============================
-         Free Plan Restriction
-      ============================= */
+      setAiLoading(true);
 
-      if (
+      const data =
+        await generateTasks(
 
-        !editingProject &&
+          formData.title,
 
-        !isPremium &&
-
-        projectCount >= 3
-
-      ) {
-
-        toast.error(
-
-          "🚀 Free plan allows only 3 projects. Upgrade to Premium."
+          formData.description
 
         );
 
-        return;
-
-      }
-
-
-
-      setLoading(true);
-
-      let data;
-
-
-
-      if (editingProject) {
-
-        data = await updateProject(
-
-          editingProject._id,
-
-          payload
-
-        );
-
-      }
-
-      else {
-
-        data = await createProject(
-
-          payload
-
-        );
-
-      }
-
-
+      setAiTasks(data.tasks || []);
 
       toast.success(
-
-        data.message
-
+        "AI tasks generated successfully!"
       );
-
-
-
-      setFormData(initialForm);
-
-
-
-      onProjectCreated();
 
     }
 
     catch (error) {
 
-      console.error(
+      toast.error(
 
-        "Project operation failed:",
+        error.response?.data?.message ||
 
-        error
+        "Failed to generate AI tasks."
 
       );
-
-
-
-      if (
-
-        error.response?.data?.premiumRequired
-
-      ) {
-
-        toast.error(
-
-          "🚀 Upgrade to Premium for unlimited projects."
-
-        );
-
-      }
-
-      else {
-
-        toast.error(
-
-          error.response?.data?.message ||
-
-          "Operation failed."
-
-        );
-
-      }
 
     }
 
     finally {
 
-      setLoading(false);
+      setAiLoading(false);
 
     }
 
@@ -243,62 +179,407 @@ function ProjectForm({
 
 
 
+
   /* ==========================
-     Cancel Edit
+     Add AI Task to Description
   ========================== */
 
-  const handleCancel = () => {
+  const handleAddTask = (task) => {
+
+  if (formData.description.includes(task)) {
+    toast.error("Task already added.");
+    return;
+  }
+
+  setFormData((prev) => ({
+
+    ...prev,
+
+    description:
+      prev.description +
+      `\n• ${task}`,
+
+  }));
+
+  toast.success(
+    "Task added to description."
+  );
+
+};
+
+
+
+
+  /* ==========================
+     Handle Submit
+  ========================== */
+  const handleSubmit = async (e) => {
+
+  e.preventDefault();
+
+  if (loading) return;
+
+  const payload = {
+
+    title: formData.title.trim(),
+
+    description: formData.description.trim(),
+
+    status: formData.status,
+
+  };
+
+  try {
+
+    /* =============================
+       Free Plan Restriction
+    ============================= */
+
+    if (
+
+      !editingProject &&
+
+      !isPremium &&
+
+      projectCount >= 3
+
+    ) {
+
+      toast.error(
+
+        "🚀 Free plan allows only 3 projects. Upgrade to Premium."
+
+      );
+
+      return;
+
+    }
+
+    setLoading(true);
+
+    let data;
+
+    if (editingProject) {
+
+      data = await updateProject(
+
+        editingProject._id,
+
+        payload
+
+      );
+
+    }
+
+    else {
+
+      data = await createProject(
+
+        payload
+
+      );
+
+    }
+
+    toast.success(
+
+      data.message ||
+
+      (editingProject
+
+        ? "Project updated successfully!"
+
+        : "Project created successfully!")
+
+    );
 
     setFormData(initialForm);
 
-    onCancelEdit();
+    setAiTasks([]);
 
-  };
-  
-  return (
+    onProjectCreated();
 
-    <div className={styles.card}>
+  }
 
-      <h2 id="project-form-title">
+  catch (error) {
 
-        {
+    console.error(
 
-          editingProject
+      "Project operation failed:",
 
-            ? "Update Project"
+      error
 
-            : "Create New Project"
+    );
 
-        }
+    if (
 
-      </h2>
+      error.response?.data?.premiumRequired
+
+    ) {
+
+      toast.error(
+
+        "🚀 Upgrade to Premium for unlimited projects."
+
+      );
+
+    }
+
+    else {
+
+      toast.error(
+
+        error.response?.data?.message ||
+
+        "Operation failed."
+
+      );
+
+    }
+
+  }
+
+  finally {
+
+    setLoading(false);
+
+  }
+
+};
+
+
+
+
+/* ==========================
+   Cancel Edit
+========================== */
+
+const handleCancel = () => {
+
+  setFormData(initialForm);
+
+  setAiTasks([]);
+
+  onCancelEdit();
+
+};
+return (
+
+  <div className={styles.card}>
+
+    <h2 id="project-form-title">
+
+      {
+
+        editingProject
+
+          ? "Update Project"
+
+          : "Create New Project"
+
+      }
+
+    </h2>
+
+
+
+
+
+    {/* ==========================
+        Free Plan Warning
+    ========================== */}
+
+    {
+
+      !editingProject &&
+
+      !isPremium &&
+
+      projectCount >= 3 &&
+
+      (
+
+        <div className={styles.warning}>
+
+          🚀 You reached the free plan limit.
+
+          <br />
+
+          Upgrade to Premium to create
+          unlimited projects.
+
+        </div>
+
+      )
+
+    }
+
+
+
+
+
+
+    <form
+
+      onSubmit={handleSubmit}
+
+      aria-labelledby="project-form-title"
+
+    >
+
+      <input
+
+        type="text"
+
+        name="title"
+
+        placeholder="Project Title"
+
+        value={formData.title}
+
+        onChange={handleChange}
+
+        maxLength={100}
+
+        disabled={loading}
+
+        required
+
+      />
+
+
+
+
+
+      <textarea
+
+        name="description"
+
+        placeholder="Project Description"
+
+        value={formData.description}
+
+        onChange={handleChange}
+
+        maxLength={1000}
+
+        disabled={loading}
+
+        required
+
+      />
+
 
 
 
 
 
       {/* ==========================
-          Free Plan Warning
+          AI Button
+      ========================== */}
+
+      <button
+
+        type="button"
+
+        className={styles.aiButton}
+
+        onClick={handleGenerateTasks}
+
+        disabled={
+
+          aiLoading ||
+
+          loading
+
+        }
+
+      >
+
+        <Sparkles size={18} />
+
+        {
+
+          aiLoading
+
+            ? "Generating..."
+
+            : "Generate AI Tasks"
+
+        }
+
+      </button>
+
+
+
+
+
+
+      {/* ==========================
+          AI Suggestions
       ========================== */}
 
       {
 
-        !editingProject &&
-
-        !isPremium &&
-
-        projectCount >= 3 &&
+        aiTasks.length > 0 &&
 
         (
 
-          <div className={styles.warning}>
+          <div className={styles.aiSuggestions}>
 
-            🚀 You reached the free plan limit.
+            <h3>
 
-            <br />
+              ✨ AI Suggested Tasks
 
-            Upgrade to Premium to create
-            unlimited projects.
+            </h3>
+
+            <ul>
+
+              {
+
+                aiTasks.map(
+
+                  (task, index) => (
+
+                    <li
+
+                      key={index}
+
+                    >
+
+                      <span>
+
+                        {task}
+
+                      </span>
+
+                      <button
+
+                        type="button"
+
+                        className={styles.addTaskBtn}
+
+                        onClick={() =>
+
+                          handleAddTask(task)
+
+                        }
+
+                      >
+
+                        + Add
+
+                      </button>
+
+                    </li>
+
+                  )
+
+                )
+
+              }
+
+            </ul>
 
           </div>
 
@@ -311,166 +592,113 @@ function ProjectForm({
 
 
 
-      <form
 
-        onSubmit={handleSubmit}
+      <select
 
-        aria-labelledby="project-form-title"
+        name="status"
+
+        value={formData.status}
+
+        onChange={handleChange}
+
+        disabled={loading}
 
       >
 
-        <input
+        <option>
 
-          type="text"
+          In Progress
 
-          name="title"
+        </option>
 
-          placeholder="Project Title"
+        <option>
 
-          value={formData.title}
+          Pending
 
-          onChange={handleChange}
+        </option>
 
-          maxLength={100}
+        <option>
 
-          disabled={loading}
+          Completed
 
-          required
+        </option>
 
-        />
+      </select>
 
 
 
 
 
-        <textarea
 
-          name="description"
 
-          placeholder="Project Description"
+      <button
 
-          value={formData.description}
+        type="submit"
 
-          onChange={handleChange}
+        disabled={loading}
 
-          maxLength={1000}
-
-          disabled={loading}
-
-          required
-
-        />
-
-
-
-
-
-
-        <select
-
-          name="status"
-
-          value={formData.status}
-
-          onChange={handleChange}
-
-          disabled={loading}
-
-        >
-
-          <option>
-
-            In Progress
-
-          </option>
-
-          <option>
-
-            Pending
-
-          </option>
-
-          <option>
-
-            Completed
-
-          </option>
-
-        </select>
-
-
-
-
-
-
-
-        <button
-
-          type="submit"
-
-          disabled={loading}
-
-        >
-
-          {
-
-            loading
-
-              ?
-
-              editingProject
-
-                ? "Updating..."
-
-                : "Creating..."
-
-              :
-
-              editingProject
-
-                ? "Update Project"
-
-                : "Create Project"
-
-          }
-
-        </button>
-
-
-
-
-
-
+      >
 
         {
 
-          editingProject &&
+          loading
 
-          (
+            ?
 
-            <button
+            editingProject
 
-              type="button"
+              ? "Updating..."
 
-              onClick={handleCancel}
+              : "Creating..."
 
-              disabled={loading}
+            :
 
-            >
+            editingProject
 
-              Cancel
+              ? "Update Project"
 
-            </button>
-
-          )
+              : "Create Project"
 
         }
 
-      </form>
+      </button>
 
-    </div>
 
-  );
+
+
+
+
+
+      {
+
+        editingProject &&
+
+        (
+
+          <button
+
+            type="button"
+
+            onClick={handleCancel}
+
+            disabled={loading}
+
+          >
+
+            Cancel
+
+          </button>
+
+        )
+
+      }
+
+    </form>
+
+  </div>
+
+);
+
 
 }
 

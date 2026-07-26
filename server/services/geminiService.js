@@ -1,13 +1,8 @@
-const { GoogleGenerativeAI } = require("@google/generative-ai");
+const { GoogleGenAI } = require("@google/genai");
 
-const genAI = new GoogleGenerativeAI(
-  process.env.GEMINI_API_KEY
-);
-
-const model = genAI.getGenerativeModel({
-  model: "gemini-1.5-flash",
+const ai = new GoogleGenAI({
+  apiKey: process.env.GEMINI_API_KEY,
 });
-
 
 const generateTaskSuggestions = async (
   projectTitle,
@@ -23,16 +18,18 @@ ${projectTitle}
 Project Description:
 ${description}
 
-Generate useful development tasks for this project.
+Generate 6 development tasks for this project.
 
-Return only a list of tasks.
+Return only a bullet list.
 `;
 
-  const result = await model.generateContent(prompt);
+  const response = await ai.models.generateContent({
+    model: "gemini-2.5-flash",
+    contents: prompt,
+  });
 
-  return result.response.text();
+  return response.text;
 };
-
 
 module.exports = {
   generateTaskSuggestions,

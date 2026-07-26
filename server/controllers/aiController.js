@@ -30,9 +30,9 @@ const suggestTasks = async (req, res) => {
 
 
     res.status(200).json({
-      success:true,
-      suggestions,
-    });
+  success: true,
+  tasks: suggestions.tasks,
+});
 
 
   } catch (error) {

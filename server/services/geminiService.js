@@ -14,9 +14,22 @@ ${projectTitle}
 Project Description:
 ${description}
 
-Generate 6 development tasks.
+Generate exactly 6 development tasks.
 
-Return only a bullet list.
+Return ONLY a valid JSON object in this format:
+
+{
+  "tasks": [
+    "Task 1",
+    "Task 2",
+    "Task 3",
+    "Task 4",
+    "Task 5",
+    "Task 6"
+  ]
+}
+
+Do not include markdown, backticks, explanations, or any extra text.
 `;
 
   const response = await ai.models.generateContent({
@@ -24,7 +37,7 @@ Return only a bullet list.
     contents: prompt,
   });
 
-  return response.text;
+  return JSON.parse(response.text);
 };
 
 module.exports = {

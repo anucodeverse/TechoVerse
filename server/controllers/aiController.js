@@ -35,14 +35,15 @@ const suggestTasks = async (req, res) => {
     });
 
 
-  } catch(error){
+  } catch (error) {
+  console.error("AI Error:", error);
 
-    res.status(500).json({
-      success:false,
-      message:"AI generation failed",
-    });
-
-  }
+  res.status(500).json({
+    success: false,
+    message: "AI generation failed",
+    error: error.message,
+  });
+}
 
 };
 

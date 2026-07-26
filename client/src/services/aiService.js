@@ -6,7 +6,7 @@ export const generateTasks = async (projectTitle, description) => {
   const token = localStorage.getItem("token");
 
   const response = await axios.post(
-    `${API_URL}/api/ai/suggest`,
+    `${API_URL}/ai/suggest`,
     {
       projectTitle,
       description,

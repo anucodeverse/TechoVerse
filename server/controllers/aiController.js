@@ -38,10 +38,23 @@ const suggestTasks = async (req, res) => {
   } catch (error) {
   console.error("AI Error:", error);
 
+  // Gemini quota exceeded
+  if (
+    error.message &&
+    (
+      error.message.includes("RESOURCE_EXHAUSTED") ||
+      error.message.includes("Quota exceeded")
+    )
+  ) {
+    return res.status(429).json({
+      success: false,
+      message: "Gemini API quota exceeded. Please try again later.",
+    });
+  }
+
   res.status(500).json({
     success: false,
     message: "AI generation failed",
-    error: error.message,
   });
 }
 

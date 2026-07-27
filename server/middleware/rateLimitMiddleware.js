@@ -13,7 +13,7 @@ const loginLimiter = rateLimit({
 
 const aiLimiter = rateLimit({
   windowMs: 60 * 1000, // 1 minute
-  max: 10,
+  max: 2,
   message: {
     success: false,
     message: "Too many AI requests. Please wait a minute.",

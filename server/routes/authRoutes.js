@@ -12,7 +12,9 @@ const {
 const protect =
 require("../middleware/authMiddleware");
 
-
+const {
+  loginLimiter,
+} = require("../middleware/rateLimitMiddleware");
 
 // ================= REGISTER =================
 
@@ -27,6 +29,7 @@ router.post(
 
 router.post(
   "/login",
+  loginLimiter,
   loginUser
 );
 

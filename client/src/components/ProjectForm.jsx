@@ -1,5 +1,11 @@
 import { useState, useEffect } from "react";
-import { Sparkles } from "lucide-react";
+import {
+  Sparkles,
+  CheckCircle2,
+  Plus,
+  ClipboardList,
+   Loader2,
+} from "lucide-react";
 import toast from "react-hot-toast";
 
 import { generateTasks } from "../services/aiService";
@@ -10,6 +16,9 @@ import {
 } from "../services/projectService";
 
 import styles from "./ProjectForm.module.css";
+import { useRef } from "react";
+
+
 
 function ProjectForm({
 
@@ -57,7 +66,7 @@ function ProjectForm({
   const [aiTasks, setAiTasks] =
     useState([]);
 
-
+  const aiSuggestionsRef = useRef(null);
 
 
   /* ==========================
@@ -149,11 +158,23 @@ function ProjectForm({
 
         );
 
+       
+
       setAiTasks(data.tasks || []);
 
       toast.success(
         "AI tasks generated successfully!"
       );
+
+
+     useEffect(() => {
+  if (aiTasks.length > 0) {
+    aiSuggestionsRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  }
+}, [aiTasks]);
 
     }
 
@@ -496,17 +517,22 @@ return (
 
       >
 
-        <Sparkles size={18} />
-
         {
+  aiLoading ? (
+    <Loader2
+      size={18}
+      className={styles.spin}
+    />
+  ) : (
+    <Sparkles size={18} />
+  )
+}
 
-          aiLoading
-
-            ? "Generating..."
-
-            : "Generate AI Tasks"
-
-        }
+{
+  aiLoading
+    ? "Generating AI Tasks..."
+    : "Generate AI Tasks"
+}
 
       </button>
 
@@ -525,63 +551,80 @@ return (
 
         (
 
-          <div className={styles.aiSuggestions}>
+          <div
+  ref={aiSuggestionsRef}
+  className={styles.aiSuggestions}
+>
 
-            <h3>
+    <div className={styles.aiHeader}>
 
-              ✨ AI Suggested Tasks
+        <div className={styles.aiTitle}>
 
-            </h3>
+            <ClipboardList size={22} />
 
-            <ul>
+            <div>
 
-              {
+                <h3>AI Suggested Tasks</h3>
 
-                aiTasks.map(
+                <p>
+Generated {aiTasks.length} smart tasks
+</p>
 
-                  (task, index) => (
+            </div>
 
-                    <li
+        </div>
 
-                      key={index}
+    </div>
 
-                    >
+    <div className={styles.taskGrid}>
 
-                      <span>
+        {aiTasks.map((task,index)=>(
 
-                        {task}
+            <div
+                key={index}
+                className={styles.taskCard}
+            >
 
-                      </span>
+                <div className={styles.taskInfo}>
 
-                      <button
+                    <CheckCircle2
+                        size={20}
+                    />
 
-                        type="button"
+                    <span>{task}</span>
 
-                        className={styles.addTaskBtn}
+                </div>
 
-                        onClick={() =>
+                <button
+  type="button"
+  className={styles.addTaskBtn}
+ disabled={formData.description.includes(task)}
+  onClick={() => handleAddTask(task)}
+>
 
-                          handleAddTask(task)
+                    {
+  formData.description.includes(task)
+  ? <>
+      <CheckCircle2 size={16}/>
+      Added
+    </>
+  : <>
+      <Plus size={16}/>
+      Add
+    </>
+}
 
-                        }
+                  
 
-                      >
+                </button>
 
-                        + Add
+            </div>
 
-                      </button>
+        ))}
 
-                    </li>
+    </div>
 
-                  )
-
-                )
-
-              }
-
-            </ul>
-
-          </div>
+</div>
 
         )
 

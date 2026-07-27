@@ -146,28 +146,38 @@ function ProjectForm({
     }
 
     try {
+  setAiLoading(true);
 
-      setAiLoading(true);
+  console.log("Before API");
 
-      const data =
-        await generateTasks(
+  const data = await generateTasks(
+    formData.title,
+    formData.description
+  );
 
-          formData.title,
+  console.log("After API");
+  console.log(data);
 
-          formData.description
+  setAiTasks(data.tasks || []);
 
-        );
+  toast.success("AI tasks generated successfully!");
+}
+catch (error) {
+  console.log("===== CATCH =====");
+  console.log(error);
 
-       
+  toast.error(
+    error.response?.data?.message ||
+    "Failed to generate AI tasks."
+  );
+}
+finally {
+  setAiLoading(false);
+}
 
-      setAiTasks(data.tasks || []);
+  };
 
-      toast.success(
-        "AI tasks generated successfully!"
-      );
-
-
-     useEffect(() => {
+useEffect(() => {
   if (aiTasks.length > 0) {
     aiSuggestionsRef.current?.scrollIntoView({
       behavior: "smooth",
@@ -175,30 +185,6 @@ function ProjectForm({
     });
   }
 }, [aiTasks]);
-
-    }
-
-    catch (error) {
-
-      toast.error(
-
-        error.response?.data?.message ||
-
-        "Failed to generate AI tasks."
-
-      );
-
-    }
-
-    finally {
-
-      setAiLoading(false);
-
-    }
-
-  };
-
-
 
 
   /* ==========================

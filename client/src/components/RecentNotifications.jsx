@@ -5,12 +5,26 @@ function RecentNotifications() {
 
   const [notifications, setNotifications] = useState([]);
 
-  useEffect(() => {
+  const loadNotifications = () => {
 
     const saved =
       JSON.parse(localStorage.getItem("notifications")) || [];
 
     setNotifications(saved);
+
+  };
+
+  useEffect(() => {
+
+    // Load immediately
+    loadNotifications();
+
+    // Refresh every second
+    const interval = setInterval(() => {
+      loadNotifications();
+    }, 1000);
+
+    return () => clearInterval(interval);
 
   }, []);
 
@@ -34,14 +48,16 @@ function RecentNotifications() {
 
         (
 
-          notifications.map((item,index)=>(
+          notifications.map((item, index) => (
 
             <div
               key={index}
               className={styles.notification}
             >
 
-              <div className={styles.icon}>🔵</div>
+              <div className={styles.icon}>
+                🔵
+              </div>
 
               <div>
 

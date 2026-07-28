@@ -1,66 +1,67 @@
+import { useEffect, useState } from "react";
 import styles from "./RecentNotifications.module.css";
 
 function RecentNotifications() {
 
-  const notifications = [
+  const [notifications, setNotifications] = useState([]);
 
-    {
-      id:1,
-      message:"New project created successfully",
-      time:"5 mins ago"
-    },
+  useEffect(() => {
 
-    {
-      id:2,
-      message:"Premium plan activated",
-      time:"Today"
-    },
+    const saved =
+      JSON.parse(localStorage.getItem("notifications")) || [];
 
-    {
-      id:3,
-      message:"AI generated project tasks",
-      time:"Today"
-    },
+    setNotifications(saved);
 
-    {
-      id:4,
-      message:"Profile updated",
-      time:"Yesterday"
-    }
+  }, []);
 
-  ];
+  return (
 
-  return(
+    <div className={styles.card}>
 
-<div className={styles.card}>
+      <h2>🔔 Recent Notifications</h2>
 
-<h2>🔔 Recent Notifications</h2>
+      {
 
-{
+        notifications.length === 0 ?
 
-notifications.map(item=>(
+        (
 
-<div key={item.id} className={styles.notification}>
+          <p>No notifications yet.</p>
 
-<div className={styles.icon}>🔵</div>
+        )
 
-<div>
+        :
 
-<p>{item.message}</p>
+        (
 
-<span>{item.time}</span>
+          notifications.map((item,index)=>(
 
-</div>
+            <div
+              key={index}
+              className={styles.notification}
+            >
 
-</div>
+              <div className={styles.icon}>🔵</div>
 
-))
+              <div>
 
-}
+                <p>{item.message}</p>
 
-</div>
+                <span>{item.time}</span>
 
-);
+              </div>
+
+            </div>
+
+          ))
+
+        )
+
+      }
+
+    </div>
+
+  );
 
 }
 

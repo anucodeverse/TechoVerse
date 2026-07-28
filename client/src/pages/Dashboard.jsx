@@ -1645,8 +1645,8 @@ className={styles.recentProjects}
 </h2>
 
 <div className={styles.bottomGrid}>
-  <ActivityTimeline />
-  <RecentNotifications />
+  <ActivityTimeline projects={projects} />
+<RecentNotifications projects={projects} />
 </div>
 
 

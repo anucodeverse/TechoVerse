@@ -1,0 +1,35 @@
+.card{
+background:white;
+padding:25px;
+border-radius:18px;
+box-shadow:0 10px 25px rgba(0,0,0,.08);
+}
+
+.card h2{
+margin-bottom:20px;
+}
+
+.notification{
+display:flex;
+gap:15px;
+padding:15px 0;
+border-bottom:1px solid #eee;
+}
+
+.notification:last-child{
+border:none;
+}
+
+.icon{
+font-size:20px;
+}
+
+.notification p{
+margin:0;
+font-weight:600;
+}
+
+.notification span{
+font-size:13px;
+color:#777;
+}

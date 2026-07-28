@@ -1,0 +1,39 @@
+.card{
+background:white;
+padding:25px;
+border-radius:18px;
+box-shadow:0 10px 25px rgba(0,0,0,.08);
+}
+
+.card h2{
+margin-bottom:20px;
+}
+
+.item{
+display:flex;
+align-items:flex-start;
+margin-bottom:20px;
+}
+
+.dot{
+width:14px;
+height:14px;
+border-radius:50%;
+margin-right:18px;
+margin-top:6px;
+}
+
+.content h4{
+margin:0;
+font-size:18px;
+}
+
+.content p{
+margin:5px 0;
+color:#64748b;
+}
+
+.content span{
+font-size:13px;
+color:#999;
+}

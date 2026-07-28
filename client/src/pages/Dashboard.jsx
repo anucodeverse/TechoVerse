@@ -16,7 +16,8 @@ import Loading from "../components/Loading";
 import UpgradeButton from "../components/UpgradeButton";
 
 import { getProjects } from "../services/projectService";
-
+import ActivityTimeline from "../components/ActivityTimeline";
+import RecentNotifications from "../components/RecentNotifications";
 
 import {
   BarChart,
@@ -1643,7 +1644,10 @@ className={styles.recentProjects}
   Recent Projects
 </h2>
 
-
+<div className={styles.bottomGrid}>
+  <ActivityTimeline />
+  <RecentNotifications />
+</div>
 
 
 

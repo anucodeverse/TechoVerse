@@ -9,7 +9,7 @@ const projectRoutes = require("./routes/projectRoutes");
 const paymentRoutes = require("./routes/paymentRoutes");
 const aiRoutes = require("./routes/aiRoutes");
 const app = express();
-
+const helmet = require("helmet");
 // Hide Express Signature
 app.disable("x-powered-by");
 
@@ -83,6 +83,9 @@ app.use("/api/payment", paymentRoutes);
 
 // AI Routes
 app.use("/api/ai", aiRoutes);
+
+//helmet
+app.use(helmet());
 
 // Protected Profile Route
 app.get("/api/auth/profile", protect, (req, res) => {

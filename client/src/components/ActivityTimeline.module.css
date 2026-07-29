@@ -1,56 +1,214 @@
-.card{
-    background:#fff;
-    padding:25px;
-    border-radius:18px;
-    box-shadow:0 10px 25px rgba(0,0,0,.08);
+.card {
 
-    display:flex;
-    flex-direction:column;
+  background:white;
 
-    min-height:400px;
+  padding:25px;
+
+  border-radius:18px;
+
+  box-shadow:
+  0 10px 25px rgba(0,0,0,.08);
+
+  transition:.3s ease;
+
 }
 
-.card h2{
-    margin-bottom:20px;
+
+.card:hover {
+
+  transform:translateY(-3px);
+
+  box-shadow:
+  0 15px 35px rgba(0,0,0,.12);
+
 }
 
-.item{
-    display:flex;
-    align-items:flex-start;
-    gap:18px;
-    margin-bottom:22px;
+
+
+.card h2 {
+
+  display:flex;
+
+  align-items:center;
+
+  gap:10px;
+
+  margin:0 0 25px;
+
+  font-size:20px;
+
+  color:#111827;
+
 }
 
-.item:last-child{
-    margin-bottom:0;
+
+
+.timeline {
+
+  display:flex;
+
+  flex-direction:column;
+
 }
 
-.dot{
-    width:14px;
-    height:14px;
-    border-radius:50%;
-    margin-top:8px;
-    flex-shrink:0;
+
+
+.item {
+
+  display:flex;
+
+  gap:15px;
+
+  position:relative;
+
+  padding-bottom:22px;
+
 }
 
-.content{
-    flex:1;
+
+
+.item:not(:last-child)::after {
+
+  content:"";
+
+  position:absolute;
+
+  left:5px;
+
+  top:18px;
+
+  width:2px;
+
+  height:calc(100% - 10px);
+
+  background:#e5e7eb;
+
 }
 
-.content h4{
-    margin:0 0 6px;
-    font-size:20px;
-    font-weight:700;
+
+
+.dot {
+
+  width:12px;
+
+  height:12px;
+
+  border-radius:50%;
+
+  margin-top:7px;
+
+  flex-shrink:0;
+
+  z-index:1;
+
 }
 
-.content p{
-    margin:0 0 8px;
-    color:#64748b;
-    font-size:16px;
-    line-height:1.5;
+
+
+.completed {
+
+  background:#16a34a;
+
 }
 
-.content span{
+
+
+.pending {
+
+  background:#f59e0b;
+
+}
+
+
+
+.updated {
+
+  background:#2563eb;
+
+}
+
+
+
+.content {
+
+  flex:1;
+
+}
+
+
+
+.content h4 {
+
+  margin:0 0 5px;
+
+  font-size:15px;
+
+  font-weight:700;
+
+  color:#111827;
+
+}
+
+
+
+.content p {
+
+  margin:0 0 6px;
+
+  font-size:14px;
+
+  color:#4b5563;
+
+}
+
+
+
+.content span {
+
+  font-size:12px;
+
+  color:#9ca3af;
+
+}
+
+
+
+.empty {
+
+  text-align:center;
+
+  padding:25px;
+
+  color:#6b7280;
+
+  font-size:14px;
+
+}
+
+
+
+@media(max-width:768px){
+
+
+  .card {
+
+    padding:20px;
+
+  }
+
+
+  .content h4 {
+
     font-size:14px;
-    color:#94a3b8;
+
+  }
+
+
+  .content p {
+
+    font-size:13px;
+
+  }
+
+
 }

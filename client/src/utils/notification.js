@@ -12,7 +12,7 @@ export const addNotification = (notification) => {
 
 
   const key =
-"notifications";
+    `notifications_${user._id}`;
 
 
 

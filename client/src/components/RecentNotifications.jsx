@@ -9,59 +9,20 @@ function RecentNotifications() {
 
 
 
-  const getNotificationKey = () => {
-
-
-    const user =
-      JSON.parse(
-        localStorage.getItem("user")
-      );
-
-
-    if (!user?._id) {
-
-      return null;
-
-    }
-
-
-    return `notifications_${user._id}`;
-
-  };
-
-
-
-
   const loadNotifications = () => {
-
-
-    const key = getNotificationKey();
-
-
-
-    if (!key) {
-
-      setNotifications([]);
-
-      return;
-
-    }
-
 
 
     const savedNotifications =
       JSON.parse(
-        localStorage.getItem(key)
+        localStorage.getItem("notifications")
       ) || [];
 
 
 
     setNotifications(
-
-      [...savedNotifications]
-        .slice(0, 5)
-
+      savedNotifications.slice(0, 5)
     );
+
 
   };
 
@@ -72,7 +33,7 @@ function RecentNotifications() {
   useEffect(() => {
 
 
-    // Initial load
+    // Load initially
     loadNotifications();
 
 
@@ -86,7 +47,7 @@ function RecentNotifications() {
 
 
 
-    // Multiple tabs update
+    // Other tab update
     const handleStorageChange = () => {
 
       loadNotifications();
@@ -106,6 +67,7 @@ function RecentNotifications() {
       "storage",
       handleStorageChange
     );
+
 
 
 
@@ -188,51 +150,22 @@ function RecentNotifications() {
 
 
             {
-              notifications.map((item)=>(
+              notifications.map((item, index) => (
 
 
                 <div
-                  key={item.id}
+
+                  key={index}
+
                   className={styles.notification}
+
                 >
 
 
 
                   <div className={styles.icon}>
 
-
-                    {
-                      item.type === "success"
-
-                      ?
-
-                      "✅"
-
-
-                      :
-
-                      item.type === "warning"
-
-                      ?
-
-                      "⚠️"
-
-
-                      :
-
-                      item.type === "error"
-
-                      ?
-
-                      "❌"
-
-
-                      :
-
-                      "🔵"
-
-                    }
-
+                    🔵
 
                   </div>
 
@@ -243,13 +176,17 @@ function RecentNotifications() {
 
 
                     <p>
+
                       {item.message}
+
                     </p>
 
 
 
                     <span>
+
                       {item.time}
+
                     </span>
 
 
@@ -261,6 +198,7 @@ function RecentNotifications() {
 
 
               ))
+
             }
 
 

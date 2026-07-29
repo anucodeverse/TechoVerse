@@ -1,5 +1,6 @@
 export const addNotification = (notification) => {
 
+
   const user =
     JSON.parse(
       localStorage.getItem("user")
@@ -9,25 +10,27 @@ export const addNotification = (notification) => {
   if (!user?._id) return;
 
 
+
   const key =
     `notifications_${user._id}`;
 
 
-  const oldNotifications =
+
+  const existing =
     JSON.parse(
       localStorage.getItem(key)
     ) || [];
 
 
 
-  const updatedNotifications = [
+  const updated = [
 
     {
       id: Date.now(),
       ...notification
     },
 
-    ...oldNotifications
+    ...existing
 
   ].slice(0,5);
 
@@ -35,7 +38,15 @@ export const addNotification = (notification) => {
 
   localStorage.setItem(
     key,
-    JSON.stringify(updatedNotifications)
+    JSON.stringify(updated)
   );
+
+
+
+  // Refresh dashboard notification card
+  window.dispatchEvent(
+    new Event("notificationsUpdated")
+  );
+
 
 };

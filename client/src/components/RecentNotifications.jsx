@@ -11,6 +11,7 @@ function RecentNotifications() {
 
   const getNotificationKey = () => {
 
+
     const user =
       JSON.parse(
         localStorage.getItem("user")
@@ -27,6 +28,7 @@ function RecentNotifications() {
     return `notifications_${user._id}`;
 
   };
+
 
 
 
@@ -47,7 +49,7 @@ function RecentNotifications() {
 
 
 
-    const saved =
+    const savedNotifications =
       JSON.parse(
         localStorage.getItem(key)
       ) || [];
@@ -56,8 +58,7 @@ function RecentNotifications() {
 
     setNotifications(
 
-      [...saved]
-        .reverse()
+      [...savedNotifications]
         .slice(0, 5)
 
     );
@@ -66,18 +67,38 @@ function RecentNotifications() {
 
 
 
+
+
   useEffect(() => {
 
 
+    // Initial load
     loadNotifications();
 
 
 
+    // Same tab update
+    const handleNotificationUpdate = () => {
+
+      loadNotifications();
+
+    };
+
+
+
+    // Multiple tabs update
     const handleStorageChange = () => {
 
       loadNotifications();
 
     };
+
+
+
+    window.addEventListener(
+      "notificationsUpdated",
+      handleNotificationUpdate
+    );
 
 
 
@@ -88,17 +109,30 @@ function RecentNotifications() {
 
 
 
+
     return () => {
+
+
+      window.removeEventListener(
+        "notificationsUpdated",
+        handleNotificationUpdate
+      );
+
+
 
       window.removeEventListener(
         "storage",
         handleStorageChange
       );
 
+
     };
 
 
   }, []);
+
+
+
 
 
 
@@ -117,29 +151,36 @@ function RecentNotifications() {
 
 
 
-      {
-        notifications.length === 0
 
-        ?
+
+      {
+        notifications.length === 0 ?
+
 
         (
 
           <div className={styles.empty}>
 
+
             <div className={styles.emptyIcon}>
               🔔
             </div>
 
+
             <p>
               No notifications yet.
             </p>
+
 
           </div>
 
         )
 
 
+
         :
+
+
 
         (
 
@@ -147,13 +188,14 @@ function RecentNotifications() {
 
 
             {
-              notifications.map((item,index)=>(
+              notifications.map((item)=>(
 
 
                 <div
-                  key={item.id || index}
+                  key={item.id}
                   className={styles.notification}
                 >
+
 
 
                   <div className={styles.icon}>
@@ -161,28 +203,39 @@ function RecentNotifications() {
 
                     {
                       item.type === "success"
+
                       ?
+
                       "✅"
+
 
                       :
 
                       item.type === "warning"
+
                       ?
+
                       "⚠️"
+
 
                       :
 
                       item.type === "error"
+
                       ?
+
                       "❌"
+
 
                       :
 
                       "🔵"
+
                     }
 
 
                   </div>
+
 
 
 
@@ -203,6 +256,7 @@ function RecentNotifications() {
                   </div>
 
 
+
                 </div>
 
 
@@ -212,9 +266,11 @@ function RecentNotifications() {
 
           </div>
 
+
         )
 
       }
+
 
 
     </div>

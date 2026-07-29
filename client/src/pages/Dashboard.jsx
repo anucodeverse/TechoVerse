@@ -1614,7 +1614,7 @@ Dashboard Activity
 
   <div className={styles.bottomGrid}>
     <ActivityTimeline projects={projects} />
-    <RecentNotifications projects={projects} />
+    <RecentNotifications  />
   </div>
 
 </section>

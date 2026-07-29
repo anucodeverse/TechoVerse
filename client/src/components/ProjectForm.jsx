@@ -9,7 +9,8 @@ import {
 import toast from "react-hot-toast";
 
 import { generateTasks } from "../services/aiService";
-
+import { addNotification }
+from "../utils/notification";
 import {
   createProject,
   updateProject,
@@ -555,7 +556,7 @@ return (
       </button>
 
 
-
+  
 
 
 

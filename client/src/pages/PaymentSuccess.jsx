@@ -9,6 +9,8 @@ import {
 } from "react-router-dom";
 
 import styles from "./Payment.module.css";
+import { addNotification }
+from "../utils/notification";
 
 import {
   verifyPayment,

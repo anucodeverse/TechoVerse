@@ -9,16 +9,57 @@ function RecentNotifications() {
 
 
 
+  const getNotificationKey = () => {
+
+    const user =
+      JSON.parse(
+        localStorage.getItem("user")
+      );
+
+
+    if (!user?._id) {
+
+      return null;
+
+    }
+
+
+    return `notifications_${user._id}`;
+
+  };
+
+
+
   const loadNotifications = () => {
 
+
+    const key = getNotificationKey();
+
+
+
+    if (!key) {
+
+      setNotifications([]);
+
+      return;
+
+    }
+
+
+
     const saved =
-      JSON.parse(localStorage.getItem("notifications")) || [];
+      JSON.parse(
+        localStorage.getItem(key)
+      ) || [];
+
 
 
     setNotifications(
+
       [...saved]
         .reverse()
         .slice(0, 5)
+
     );
 
   };
@@ -28,17 +69,16 @@ function RecentNotifications() {
   useEffect(() => {
 
 
-    // Load initial notifications
     loadNotifications();
 
 
 
-    // Listen for localStorage changes
     const handleStorageChange = () => {
 
       loadNotifications();
 
     };
+
 
 
     window.addEventListener(
@@ -62,7 +102,6 @@ function RecentNotifications() {
 
 
 
-
   return (
 
     <div className={styles.card}>
@@ -79,8 +118,9 @@ function RecentNotifications() {
 
 
       {
-        notifications.length === 0 ?
+        notifications.length === 0
 
+        ?
 
         (
 
@@ -101,7 +141,6 @@ function RecentNotifications() {
 
         :
 
-
         (
 
           <div className={styles.list}>
@@ -118,6 +157,7 @@ function RecentNotifications() {
 
 
                   <div className={styles.icon}>
+
 
                     {
                       item.type === "success"
@@ -140,6 +180,7 @@ function RecentNotifications() {
 
                       "🔵"
                     }
+
 
                   </div>
 

@@ -1,98 +1,186 @@
 import { useEffect, useState } from "react";
 import styles from "./RecentNotifications.module.css";
 
+
 function RecentNotifications() {
 
+
   const [notifications, setNotifications] = useState([]);
+
+
 
   const loadNotifications = () => {
 
     const saved =
       JSON.parse(localStorage.getItem("notifications")) || [];
 
-    setNotifications(saved);
+
+    setNotifications(
+      [...saved]
+        .reverse()
+        .slice(0, 5)
+    );
 
   };
 
-  useEffect(()=>{
 
 
-const timer=setTimeout(()=>{
-
-loadNotifications();
-
-},0);
+  useEffect(() => {
 
 
-const interval=setInterval(()=>{
-
-loadNotifications();
-
-},1000);
+    // Load initial notifications
+    loadNotifications();
 
 
 
-return ()=>{
+    // Listen for localStorage changes
+    const handleStorageChange = () => {
 
-clearTimeout(timer);
-clearInterval(interval);
+      loadNotifications();
 
-};
+    };
 
 
-},[]);
+    window.addEventListener(
+      "storage",
+      handleStorageChange
+    );
+
+
+
+    return () => {
+
+      window.removeEventListener(
+        "storage",
+        handleStorageChange
+      );
+
+    };
+
+
+  }, []);
+
+
+
 
   return (
 
     <div className={styles.card}>
 
-      <h2>🔔 Recent Notifications</h2>
+
+      <div className={styles.header}>
+
+        <h2>
+          🔔 Recent Notifications
+        </h2>
+
+      </div>
+
+
 
       {
-
         notifications.length === 0 ?
+
 
         (
 
-          <p>No notifications yet.</p>
+          <div className={styles.empty}>
+
+            <div className={styles.emptyIcon}>
+              🔔
+            </div>
+
+            <p>
+              No notifications yet.
+            </p>
+
+          </div>
 
         )
 
+
         :
+
 
         (
 
-          notifications.map((item, index) => (
+          <div className={styles.list}>
 
-            <div
-              key={index}
-              className={styles.notification}
-            >
 
-              <div className={styles.icon}>
-                🔵
-              </div>
+            {
+              notifications.map((item,index)=>(
 
-              <div>
 
-                <p>{item.message}</p>
+                <div
+                  key={item.id || index}
+                  className={styles.notification}
+                >
 
-                <span>{item.time}</span>
 
-              </div>
+                  <div className={styles.icon}>
 
-            </div>
+                    {
+                      item.type === "success"
+                      ?
+                      "✅"
 
-          ))
+                      :
+
+                      item.type === "warning"
+                      ?
+                      "⚠️"
+
+                      :
+
+                      item.type === "error"
+                      ?
+                      "❌"
+
+                      :
+
+                      "🔵"
+                    }
+
+                  </div>
+
+
+
+                  <div className={styles.content}>
+
+
+                    <p>
+                      {item.message}
+                    </p>
+
+
+
+                    <span>
+                      {item.time}
+                    </span>
+
+
+                  </div>
+
+
+                </div>
+
+
+              ))
+            }
+
+
+          </div>
 
         )
 
       }
+
 
     </div>
 
   );
 
 }
+
 
 export default RecentNotifications;

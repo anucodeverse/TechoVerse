@@ -43,7 +43,6 @@ export const addNotification = (notification) => {
 
 
 
-  // Refresh dashboard notification card
   window.dispatchEvent(
     new Event("notificationsUpdated")
   );

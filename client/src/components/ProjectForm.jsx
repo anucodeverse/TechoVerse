@@ -217,18 +217,11 @@ useEffect(() => {
 
  toast.success("Task added to project description.");
 
-const notifications =
-  JSON.parse(localStorage.getItem("notifications")) || [];
-
-notifications.unshift({
+addNotification({
+  type: "success",
   message: `Task added to "${formData.title}"`,
   time: new Date().toLocaleString(),
 });
-
-localStorage.setItem(
-  "notifications",
-  JSON.stringify(notifications.slice(0, 5))
-);
 
 };
 
@@ -318,20 +311,17 @@ localStorage.setItem(
 
     );
 
-    const notifications =
-  JSON.parse(localStorage.getItem("notifications")) || [];
+   addNotification({
 
-notifications.unshift({
+  type: "success",
+
   message: editingProject
     ? `Project "${payload.title}" updated`
     : `Project "${payload.title}" created`,
-  time: new Date().toLocaleString(),
-});
 
-localStorage.setItem(
-  "notifications",
-  JSON.stringify(notifications.slice(0, 5))
-);
+  time: new Date().toLocaleString(),
+
+});
 
     setFormData(initialForm);
 

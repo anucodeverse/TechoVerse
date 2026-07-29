@@ -12,19 +12,41 @@ function RecentNotifications() {
   const loadNotifications = () => {
 
 
-    const savedNotifications =
-      JSON.parse(
-        localStorage.getItem("notifications")
-      ) || [];
-
-
-
-    setNotifications(
-      savedNotifications.slice(0, 5)
+  const user =
+    JSON.parse(
+      localStorage.getItem("user")
     );
 
 
-  };
+
+  if (!user?._id) {
+
+    setNotifications([]);
+
+    return;
+
+  }
+
+
+
+  const key =
+    `notifications_${user._id}`;
+
+
+
+  const savedNotifications =
+    JSON.parse(
+      localStorage.getItem(key)
+    ) || [];
+
+
+
+  setNotifications(
+    savedNotifications.slice(0, 5)
+  );
+
+
+};
 
 
 

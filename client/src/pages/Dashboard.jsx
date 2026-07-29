@@ -1609,6 +1609,8 @@ className={styles.actionButtons}
     Dashboard Activity
   </h2>
 
+  <p>Track all recent project updates and notifications.</p>
+
   <div className={styles.bottomGrid}>
     <ActivityTimeline projects={projects} />
     <RecentNotifications projects={projects} />

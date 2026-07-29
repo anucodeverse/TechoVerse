@@ -183,7 +183,7 @@ align-items:center;
 
 flex-wrap:wrap;
 
-font-size:42px;
+ font-size:clamp(2rem,4vw,2.6rem);
 
 font-weight:700;
 
@@ -839,24 +839,26 @@ color:#15803d;
 font-weight:700;
 
 }
-
 .premiumText{
 
 display:inline-flex;
 
 align-items:center;
 
-padding:6px 16px;
+gap:8px;
 
-border-radius:30px;
+padding:7px 16px;
 
 background:#f3e8ff;
 
 color:#7e22ce;
 
+border-radius:30px;
+
 font-weight:700;
 
 }
+
 /* =====================================================
    DASHBOARD GRID
 ===================================================== */
@@ -985,25 +987,7 @@ font-weight:700;
 
 }
 
-.premiumText{
 
-display:inline-flex;
-
-align-items:center;
-
-gap:8px;
-
-padding:7px 16px;
-
-background:#f3e8ff;
-
-color:#7e22ce;
-
-border-radius:30px;
-
-font-weight:700;
-
-}
 
 
 
@@ -1166,12 +1150,10 @@ font-size:20px;
 /* =====================================================
    RECENT PROJECTS
 ===================================================== */
-
 .recentProjects{
-
-margin-top:10px;
-
+    margin-top:20px;
 }
+
 
 .sectionTitle{
 
@@ -1392,31 +1374,7 @@ letter-spacing:.3px;
    SCROLLBAR
 ===================================================== */
 
-::-webkit-scrollbar{
 
-width:10px;
-
-}
-
-::-webkit-scrollbar-track{
-
-background:#eef2f7;
-
-}
-
-::-webkit-scrollbar-thumb{
-
-background:#cbd5e1;
-
-border-radius:10px;
-
-}
-
-::-webkit-scrollbar-thumb:hover{
-
-background:#94a3b8;
-
-}
 
 .bottomGrid{
 
@@ -1429,12 +1387,62 @@ gap:25px;
 margin-top:35px;
 
 }
-.activitySection{
-    margin-bottom:60px;
+::-webkit-scrollbar{
+    width:6px;
 }
 
-.recentProjects{
-    margin-top:20px;
+::-webkit-scrollbar-track{
+    background:#eef2f7;
+}
+
+::-webkit-scrollbar-thumb{
+    background:#3b82f6;
+    border-radius:20px;
+}
+
+::-webkit-scrollbar-thumb:hover{
+    background:#2563eb;
+}
+
+
+.timelineItem{
+    position:relative;
+    padding-left:40px;
+}
+
+.timelineItem::before{
+    content:"";
+    position:absolute;
+    left:14px;
+    top:22px;
+    width:2px;
+    height:calc(100% + 20px);
+    background:#dbeafe;
+}
+
+.timelineItem:last-child::before{
+    display:none;
+}
+.notificationItem{
+    transition:.25s;
+}
+
+.notificationItem:hover{
+    background:#f8fafc;
+    transform:translateX(5px);
+}
+.activitySection{
+    margin-bottom:70px;
+}
+.activityCard,
+.notificationCard{
+    transition:.3s;
+}
+
+.activityCard:hover,
+.notificationCard:hover{
+    transform:translateY(-4px);
+    box-shadow:0 20px 40px rgba(0,0,0,.08);
 }
 
 /* =====================================================
@@ -1538,8 +1546,6 @@ border-radius:20px;
 }
 
 .heading{
-
-font-size:30px;
 
 justify-content:flex-start;
 
@@ -1829,4 +1835,13 @@ background:#2563eb;
 
 color:#ffffff;
 
+}
+@media (prefers-reduced-motion: reduce){
+  *,
+  *::before,
+  *::after{
+    animation:none !important;
+    transition:none !important;
+    scroll-behavior:auto !important;
+  }
 }

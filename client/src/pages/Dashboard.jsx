@@ -1243,14 +1243,6 @@ Login Time
 
 
 </div>
-
-
-
-
-
-
-
-
 {
 
 isPremium && (
@@ -1283,11 +1275,6 @@ className={styles.premiumText}
 
 
 </div>
-
-
-
-
-
 
 
 <div
@@ -1326,19 +1313,6 @@ Plan
 
 
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 {/* Analytics Card */}
 
@@ -1627,78 +1601,48 @@ className={styles.actionButtons}
 
 </div>
 
+{/* Activity Section */}
 
+<section className={styles.activitySection}>
+
+  <h2 className={styles.sectionTitle}>
+    Dashboard Activity
+  </h2>
+
+  <div className={styles.bottomGrid}>
+    <ActivityTimeline projects={projects} />
+    <RecentNotifications projects={projects} />
+  </div>
+
+</section>
 
 
 
 {/* Recent Projects */}
-
-
-
 <div
 className={styles.recentProjects}
 >
-
-
-
-
 <h2 className={styles.sectionTitle}>
   <FaFolderOpen className={styles.sectionIcon} />
   Recent Projects
 </h2>
-
-<div className={styles.bottomGrid}>
-  <ActivityTimeline projects={projects} />
-<RecentNotifications projects={projects} />
-</div>
-
-
-
-
-
-
 {
 
 projects.length === 0 ?
-
-
-
-
-
 (
-
-
-
 <div
 className={styles.emptyState}
 >
-
-
-
-
-
 <h3 className={styles.emptyTitle}>
   <FaRocket className={styles.emptyIcon} />
   Start Your First Project
 </h3>
-
-
-
-
-
-
 
 <p>
 
 You haven't created any projects yet.
 
 </p>
-
-
-
-
-
-
 
 <Link
 
@@ -1711,84 +1655,31 @@ className={styles.primaryBtn}
 Create Project
 
 </Link>
-
-
-
-
-
-
 </div>
-
-
-
-
-
 )
 
 :
 
 (
 
-
-
-
-
 <div
 className={styles.recentGrid}
 >
-
-
-
-
-
 {
 
 projects
 .slice(0,3)
 .map(project => (
-
-
-
-
-
 <Link
-
-
-
 key={project._id}
-
-
-
 to={`/projects/${project._id}`}
-
-
-
 className={styles.recentCard}
-
-
-
 >
-
-
-
-
-
-
-
-
 <h3>
 
 {project.title}
 
 </h3>
-
-
-
-
-
-
-
-
 <p>
 
 {
@@ -1804,19 +1695,7 @@ project.description.slice(0,80)
 "No description"
 
 }
-
-
-
 </p>
-
-
-
-
-
-
-
-
-
 <span
 className={styles.recentStatus}
 >
@@ -1824,130 +1703,33 @@ className={styles.recentStatus}
 {project.status}
 
 </span>
-
-
-
-
-
-
-
 </Link>
-
-
-
-
-
-
 ))
-
-
-
-
-
 }
-
-
-
-
-
-
-
 </div>
-
-
-
-
-
 )
-
-
-
 }
-
-
-
-
-
-
-
 </div>
 
-
-
-
-
-
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
 
 <footer
 className={styles.footer}
 >
-
-
-
-
-
-
 <p>
 
 © {new Date().getFullYear()} TechoVerse
 
 </p>
-
-
-
-
-
-
-
 <p>
 
 Built with React • Node.js • Express • MongoDB • Stripe
 
 </p>
-
-
-
-
-
-
 </footer>
-
-
-
-
-
-
-
-
-
 </div>
-
-
-
-
-
-
 </>
 
 );
-
-
-
 }
-
-
-
 export default Dashboard;

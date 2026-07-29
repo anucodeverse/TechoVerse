@@ -1434,6 +1434,11 @@ margin-top:35px;
 .activitySection{
     margin-bottom:70px;
 }
+.activitySection p{
+    color:#64748b;
+    font-size:15px;
+    margin-bottom:28px;
+}
 .activityCard,
 .notificationCard{
     transition:.3s;

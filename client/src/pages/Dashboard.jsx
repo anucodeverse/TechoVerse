@@ -1606,7 +1606,8 @@ className={styles.actionButtons}
 <section className={styles.activitySection}>
 
   <h2 className={styles.sectionTitle}>
-    Dashboard Activity
+   <FaChartLine className={styles.sectionIcon} />
+Dashboard Activity
   </h2>
 
   <p>Track all recent project updates and notifications.</p>

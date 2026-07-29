@@ -1,5 +1,5 @@
 import styles from "./ActivityTimeline.module.css";
-
+import { FaHistory } from "react-icons/fa";
 function ActivityTimeline({ projects }) {
 
   const activities = projects
@@ -28,7 +28,9 @@ function ActivityTimeline({ projects }) {
 
   return (
     <div className={styles.card}>
-      <h2>📅 Activity Timeline</h2>
+      <h2>
+  <FaHistory /> Activity Timeline
+</h2>
 
       {activities.length === 0 ? (
         <p>No recent activities.</p>

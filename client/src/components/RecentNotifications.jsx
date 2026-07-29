@@ -14,19 +14,33 @@ function RecentNotifications() {
 
   };
 
-  useEffect(() => {
+  useEffect(()=>{
 
-    // Load immediately
-    loadNotifications();
 
-    // Refresh every second
-    const interval = setInterval(() => {
-      loadNotifications();
-    }, 1000);
+const timer=setTimeout(()=>{
 
-    return () => clearInterval(interval);
+loadNotifications();
 
-  }, []);
+},0);
+
+
+const interval=setInterval(()=>{
+
+loadNotifications();
+
+},1000);
+
+
+
+return ()=>{
+
+clearTimeout(timer);
+clearInterval(interval);
+
+};
+
+
+},[]);
 
   return (
 

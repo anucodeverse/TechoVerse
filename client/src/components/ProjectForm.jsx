@@ -73,34 +73,41 @@ function ProjectForm({
      Load Edit Data
   ========================== */
 
-  useEffect(() => {
+ useEffect(() => {
 
-    if (editingProject) {
+const timer = setTimeout(()=>{
 
-      setFormData({
 
-        title: editingProject.title || "",
+if(editingProject){
 
-        description:
-          editingProject.description || "",
+setFormData({
+title: editingProject.title || "",
+description: editingProject.description || "",
+status: editingProject.status || "In Progress",
+});
 
-        status:
-          editingProject.status || "In Progress",
+}
+else{
 
-      });
+setFormData({
+title:"",
+description:"",
+status:"In Progress",
+});
 
-    }
+}
 
-    else {
 
-      setFormData(initialForm);
+setAiTasks([]);
 
-    }
 
-    // Clear previous AI suggestions
-    setAiTasks([]);
+},0);
 
-  }, [editingProject]);
+
+return ()=>clearTimeout(timer);
+
+
+},[editingProject]);
 
 
 
@@ -148,23 +155,22 @@ function ProjectForm({
     try {
   setAiLoading(true);
 
-  console.log("Before API");
+  
 
   const data = await generateTasks(
     formData.title,
     formData.description
   );
 
-  console.log("After API");
-  console.log(data);
+  
+  
 
   setAiTasks(data.tasks || []);
 
   toast.success("AI tasks generated successfully!");
 }
 catch (error) {
-  console.log("===== CATCH =====");
-  console.log(error);
+  
 
   toast.error(
     error.response?.data?.message ||

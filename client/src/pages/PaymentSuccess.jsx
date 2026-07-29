@@ -18,9 +18,7 @@ import {
   getProfile,
 } from "../services/authService";
 
-import {
-  useAuth,
-} from "../context/AuthContext";
+import { useAuth } from "../context/AuthContext";
 
 
 
@@ -66,17 +64,15 @@ function PaymentSuccess() {
   useEffect(() => {
 
 
-    if (!sessionId) {
+   if(!sessionId){
 
-      setStatus(
-        "Invalid payment session"
-      );
+setTimeout(()=>{
 
-      setLoading(false);
+setStatus("Invalid payment session");
 
-      return;
+},0);
 
-    }
+}
 
 
 

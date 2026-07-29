@@ -55,12 +55,12 @@ API.interceptors.response.use(
 // ===============================
 
 export const getProjects = async () => {
-  try {
-    const response = await API.get("/");
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
+
+  const response =
+    await API.get("/");
+
+  return response.data;
+
 };
 
 // ===============================
@@ -68,12 +68,12 @@ export const getProjects = async () => {
 // ===============================
 
 export const getProjectById = async (id) => {
-  try {
-    const response = await API.get(`/${id}`);
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
+
+  const response =
+    await API.get(`/${id}`);
+
+  return response.data;
+
 };
 
 // ===============================
@@ -81,25 +81,30 @@ export const getProjectById = async (id) => {
 // ===============================
 
 export const createProject = async (projectData) => {
-  try {
-    const response = await API.post("/", projectData);
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
-};
 
+  const response =
+    await API.post("/", projectData);
+
+  return response.data;
+
+};
 // ===============================
 // Update Project
 // ===============================
 
-export const updateProject = async (id, projectData) => {
-  try {
-    const response = await API.put(`/${id}`, projectData);
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
+export const updateProject = async (
+  id,
+  projectData
+) => {
+
+  const response =
+    await API.put(
+      `/${id}`,
+      projectData
+    );
+
+  return response.data;
+
 };
 
 // ===============================
@@ -107,12 +112,12 @@ export const updateProject = async (id, projectData) => {
 // ===============================
 
 export const deleteProject = async (id) => {
-  try {
-    const response = await API.delete(`/${id}`);
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
+
+  const response =
+    await API.delete(`/${id}`);
+
+  return response.data;
+
 };
 
 // ===============================

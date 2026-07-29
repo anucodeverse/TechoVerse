@@ -55,12 +55,12 @@ API.interceptors.response.use(
 // ===============================
 
 export const registerUser = async (userData) => {
-  try {
-    const response = await API.post("/register", userData);
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
+
+  const response =
+    await API.post("/register", userData);
+
+  return response.data;
+
 };
 
 // ===============================
@@ -68,12 +68,12 @@ export const registerUser = async (userData) => {
 // ===============================
 
 export const loginUser = async (userData) => {
-  try {
-    const response = await API.post("/login", userData);
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
+
+  const response =
+    await API.post("/login", userData);
+
+  return response.data;
+
 };
 
 // ===============================
@@ -81,12 +81,12 @@ export const loginUser = async (userData) => {
 // ===============================
 
 export const getProfile = async () => {
-  try {
-    const response = await API.get("/profile");
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
+
+  const response =
+    await API.get("/profile");
+
+  return response.data;
+
 };
 
 // ===============================

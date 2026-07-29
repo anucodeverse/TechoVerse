@@ -150,17 +150,20 @@ setLoading(false);
 useEffect(()=>{
 
 
-if(user){
+if(!user) return;
+
+
+const timer=setTimeout(()=>{
 
 fetchProjects();
 
-}
+},0);
 
 
-},[
-user,
-fetchProjects
-]);
+return ()=>clearTimeout(timer);
+
+
+},[user,fetchProjects]);
 
 
 

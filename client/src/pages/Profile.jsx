@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { FaUserCircle, FaUserShield } from "react-icons/fa";
-import { MdEmail, MdVerified } from "react-icons/md";
+import { MdVerified } from "react-icons/md";
 import { BsShieldCheck } from "react-icons/bs";
 
 import Navbar from "../components/Navbar";

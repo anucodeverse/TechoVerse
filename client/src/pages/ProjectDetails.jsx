@@ -107,11 +107,19 @@ function ProjectDetails() {
      Effects
   ========================== */
 
-  useEffect(() => {
+  useEffect(()=>{
 
-    fetchProject();
+const timer=setTimeout(()=>{
 
-  }, [fetchProject]);
+fetchProject();
+
+},0);
+
+
+return ()=>clearTimeout(timer);
+
+
+},[fetchProject]);
 
 
 

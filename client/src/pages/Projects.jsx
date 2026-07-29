@@ -15,7 +15,6 @@ import {
 import toast from "react-hot-toast";
 
 import { useAuth } from "../context/AuthContext";
-
 import {
   getProjects,
   deleteProject,
@@ -91,11 +90,20 @@ function Projects() {
 
   }, []);
 
-  useEffect(() => {
+  useEffect(()=>{
 
-    fetchProjects();
 
-  }, [fetchProjects]);
+const timer=setTimeout(()=>{
+
+fetchProjects();
+
+},0);
+
+
+return ()=>clearTimeout(timer);
+
+
+},[fetchProjects]);
   
   /* ==========================
      Delete Project

@@ -57,15 +57,13 @@ API.interceptors.response.use(
 // =====================================
 
 export const createCheckoutSession = async () => {
-  try {
-    const response = await API.post(
-      "/payment/create-checkout-session"
-    );
 
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
+  const response = await API.post(
+    "/payment/create-checkout-session"
+  );
+
+  return response.data;
+
 };
 
 // =====================================
@@ -73,18 +71,16 @@ export const createCheckoutSession = async () => {
 // =====================================
 
 export const verifyPayment = async (sessionId) => {
-  try {
-    const response = await API.post(
-      "/payment/verify-payment",
-      {
-        sessionId,
-      }
-    );
 
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
+  const response = await API.post(
+    "/payment/verify-payment",
+    {
+      sessionId,
+    }
+  );
+
+  return response.data;
+
 };
 
 // ===============================

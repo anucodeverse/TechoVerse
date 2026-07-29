@@ -1,14 +1,15 @@
 import {
-  createContext,
-  useContext,
   useEffect,
   useState,
 } from "react";
 
+import { AuthContext } from "./AuthContext";
+
 import { getProfile } from "../services/authService";
 
 
-const AuthContext = createContext();
+
+
 
 
 // =====================================
@@ -281,13 +282,19 @@ export const AuthProvider = ({ children }) => {
   // Load User On App Start
   // ============================
 
-  useEffect(() => {
+  useEffect(()=>{
+
+const timer=setTimeout(()=>{
+
+loadUser();
+
+},0);
 
 
-    loadUser();
+return ()=>clearTimeout(timer);
 
 
-  }, []);
+},[]);
 
 
 
@@ -332,14 +339,3 @@ export const AuthProvider = ({ children }) => {
 
 };
 
-
-
-
-
-// ============================
-// Custom Hook
-// ============================
-
-export const useAuth = () =>
-
-  useContext(AuthContext);

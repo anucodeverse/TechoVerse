@@ -34,9 +34,13 @@ function Navbar() {
 
   useEffect(() => {
 
+  const timer = setTimeout(() => {
     setMenuOpen(false);
+  }, 0);
 
-  }, [location.pathname]);
+  return () => clearTimeout(timer);
+
+}, [location.pathname]);
 
 
 

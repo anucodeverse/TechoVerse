@@ -90,20 +90,9 @@ function Projects() {
 
   }, []);
 
-  useEffect(()=>{
-
-
-const timer=setTimeout(()=>{
-
-fetchProjects();
-
-},0);
-
-
-return ()=>clearTimeout(timer);
-
-
-},[fetchProjects]);
+ useEffect(() => {
+  fetchProjects();
+}, [fetchProjects]);
   
   /* ==========================
      Delete Project
@@ -183,13 +172,21 @@ return ()=>clearTimeout(timer);
      Project Saved
   ========================== */
 
-  const handleProjectSaved = () => {
+ const handleProjectSaved = (project) => {
+  setProjects((prev) => {
+    const exists = prev.some((p) => p._id === project._id);
 
-    fetchProjects();
+    if (exists) {
+      return prev.map((p) =>
+        p._id === project._id ? project : p
+      );
+    }
 
-    setEditingProject(null);
+    return [project, ...prev];
+  });
 
-  };
+  setEditingProject(null);
+};
 
 
 
@@ -364,14 +361,12 @@ return ()=>clearTimeout(timer);
         ========================== */}
 
         <ProjectForm
-
-          editingProject={editingProject}
-
-          onCancelEdit={handleCancelEdit}
-
-          onProjectCreated={handleProjectSaved}
-
-        />
+  editingProject={editingProject}
+  onCancelEdit={handleCancelEdit}
+  onProjectCreated={handleProjectSaved}
+  isPremium={isPremium}
+  projectCount={projects.length}
+/>
 
 
 

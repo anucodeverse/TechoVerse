@@ -75,40 +75,18 @@ function ProjectForm({
   ========================== */
 
  useEffect(() => {
+  if (editingProject) {
+    setFormData({
+      title: editingProject.title || "",
+      description: editingProject.description || "",
+      status: editingProject.status || "In Progress",
+    });
+  } else {
+    setFormData(initialForm);
+  }
 
-const timer = setTimeout(()=>{
-
-
-if(editingProject){
-
-setFormData({
-title: editingProject.title || "",
-description: editingProject.description || "",
-status: editingProject.status || "In Progress",
-});
-
-}
-else{
-
-setFormData({
-title:"",
-description:"",
-status:"In Progress",
-});
-
-}
-
-
-setAiTasks([]);
-
-
-},0);
-
-
-return ()=>clearTimeout(timer);
-
-
-},[editingProject]);
+  setAiTasks([]);
+}, [editingProject]);
 
 
 
@@ -325,9 +303,9 @@ addNotification({
 
     setFormData(initialForm);
 
-    setAiTasks([]);
+setAiTasks([]);
 
-    onProjectCreated();
+onProjectCreated(data.project);
 
   }
 

@@ -8,42 +8,18 @@ const protect = require("./middleware/authMiddleware");
 const projectRoutes = require("./routes/projectRoutes");
 const paymentRoutes = require("./routes/paymentRoutes");
 const aiRoutes = require("./routes/aiRoutes");
-const app = express();
 const helmet = require("helmet");
+const app = express();
+app.set("trust proxy", 1);
 // Hide Express Signature
 app.disable("x-powered-by");
-
 // Connect MongoDB
 connectDB();
-
-
 // CORS Configuration
-const allowedOrigins = [
-  "http://localhost:5173",
-  "https://techo-verse-fg99.vercel.app",
-];
-
+const allowedOrigin = "https://techo-verse-fg99.vercel.app";
 app.use(
   cors({
-    origin: (origin, callback) => {
-      // Allow requests without origin (Postman, mobile apps)
-      if (!origin) {
-        return callback(null, true);
-      }
-
-      // Allow main Vercel domain and preview deployments
-      if (
-        origin.endsWith(".vercel.app")
-      ) {
-        return callback(null, true);
-      }
-
-      if (allowedOrigins.includes(origin)) {
-        return callback(null, true);
-      }
-
-      return callback(new Error("Not allowed by CORS"));
-    },
+    origin: allowedOrigin,
     methods: [
       "GET",
       "POST",
@@ -59,6 +35,10 @@ app.use(
     credentials: true,
   })
 );
+
+// Security Headers
+app.use(helmet());
+
 // Body Parser
 app.use(
   express.json({
@@ -74,7 +54,6 @@ app.get("/", (req, res) => {
 // Authentication Routes
 app.use("/api/auth", authRoutes);
 
-
 // Project Routes
 app.use("/api/projects", projectRoutes);
 
@@ -83,10 +62,6 @@ app.use("/api/payment", paymentRoutes);
 
 // AI Routes
 app.use("/api/ai", aiRoutes);
-
-//helmet
-app.use(helmet());
-
 // Protected Profile Route
 app.get("/api/auth/profile", protect, (req, res) => {
   res.status(200).json({

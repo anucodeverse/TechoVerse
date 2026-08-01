@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { registerUser } from "../services/authService";
 
 import styles from "./Register.module.css";
@@ -25,7 +25,7 @@ const [error,setError]=useState("");
 const [success,setSuccess]=useState("");
 
 const [loading,setLoading]=useState(false);
-
+const [showPassword, setShowPassword] = useState(false);
 
 
 const handleChange=(e)=>{
@@ -274,24 +274,25 @@ required
 Password
 </label>
 
+<div className={styles.passwordContainer}>
+  <input
+    type={showPassword ? "text" : "password"}
+    name="password"
+    placeholder="Create password"
+    value={formData.password}
+    onChange={handleChange}
+    className={styles.input}
+    required
+  />
 
-<input
-
-type="password"
-
-name="password"
-
-placeholder="Create password"
-
-value={formData.password}
-
-onChange={handleChange}
-
-className={styles.input}
-
-required
-
-/>
+  <button
+    type="button"
+    className={styles.eyeButton}
+    onClick={() => setShowPassword(!showPassword)}
+  >
+    {showPassword ? <FaEyeSlash /> : <FaEye />}
+  </button>
+</div>
 
 
 

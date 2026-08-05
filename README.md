@@ -749,6 +749,51 @@ Completed:
 
 ---
 
+---
+
+# 🚀 Sprint 17 – Production Deployment & E2E Integration
+
+Sprint 17 focuses on deploying TechoVerse to production and validating the complete Full-Stack flow from the live frontend to the cloud backend and MongoDB Atlas.
+
+## ☁️ Production Deployment
+
+| Component | Platform |
+|-----------|----------|
+| Frontend | Vercel |
+| Backend | Render |
+| Database | MongoDB Atlas |
+
+### Live URLs
+
+- **Frontend:** `https://techo-verse-fg99.vercel.app`
+- **Backend:** `https://techoverse-fpcd.onrender.com`
+
+## 🔐 Production Security
+
+- Configured MongoDB Atlas Network Access with `0.0.0.0/0`
+- Restricted CORS to the live Vercel frontend
+- Disabled wildcard (`*`) CORS access
+- Excluded localhost from production CORS
+- Configured production environment variables
+- Protected sensitive credentials using environment variables
+
+## 🔄 Live E2E Integration
+
+The complete production flow was tested successfully:
+
+```text
+Vercel Frontend
+      ↓
+User Authentication
+      ↓
+Render Express Backend
+      ↓
+API Request Processing
+      ↓
+MongoDB Atlas
+      ↓
+Data Persistence
+
 # 📚 Documentation
 
 Project documentation includes:

@@ -546,3 +546,4 @@ The final TechoVerse application integrates AI responsibly through secure server
 - Sprint 14 – Authentication & Backend Foundation
 - Sprint 15 – CRUD, Dashboard Analytics & Premium Features
 - Sprint 16 – AI Integration & Production Polish
+- Sprint 17 – Production Deployment & End-to-End Integration
